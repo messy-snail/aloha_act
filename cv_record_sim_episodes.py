@@ -51,8 +51,8 @@ def main(args):
     
     render_angle_cam = 'angle'
     render_top_cam = 'top'
-    render_left_wrist_cam = 'left_wrist'
-    render_right_wrist_cam = 'right_wrist'
+    # render_left_wrist_cam = 'left_wrist'
+    # render_right_wrist_cam = 'right_wrist'
 
     if not os.path.isdir(dataset_dir):
         os.makedirs(dataset_dir, exist_ok=True)
@@ -83,11 +83,11 @@ def main(args):
             img_top = ts.observation['images'][render_top_cam]
             view_image(img_top, render_top_cam, script_txt)
             
-            img_left = ts.observation['images'][render_left_wrist_cam]
-            view_image(img_left, render_left_wrist_cam, script_txt)
+            # img_left = ts.observation['images'][render_left_wrist_cam]
+            # view_image(img_left, render_left_wrist_cam, script_txt)
             
-            img_right = ts.observation['images'][render_right_wrist_cam]
-            view_image(img_right, render_right_wrist_cam, script_txt)
+            # img_right = ts.observation['images'][render_right_wrist_cam]
+            # view_image(img_right, render_right_wrist_cam, script_txt)
 
         for step in range(episode_len):
             action = policy(ts)
@@ -100,11 +100,11 @@ def main(args):
                 img_top = ts.observation['images'][render_top_cam]
                 view_image(img_top, render_top_cam, script_txt)
                 
-                img_left = ts.observation['images'][render_left_wrist_cam]
-                view_image(img_left, render_left_wrist_cam, script_txt)
+                # img_left = ts.observation['images'][render_left_wrist_cam]
+                # view_image(img_left, render_left_wrist_cam, script_txt)
                 
-                img_right = ts.observation['images'][render_right_wrist_cam]
-                view_image(img_right, render_right_wrist_cam, script_txt)
+                # img_right = ts.observation['images'][render_right_wrist_cam]
+                # view_image(img_right, render_right_wrist_cam, script_txt)
                 cv2.waitKey(1)
 
         episode_return = np.sum([ts.reward for ts in episode[1:]])
@@ -145,11 +145,11 @@ def main(args):
             img_top = ts.observation['images'][render_top_cam]
             view_image(img_top, render_top_cam, replaying_txt)
             
-            img_left = ts.observation['images'][render_left_wrist_cam]
-            view_image(img_left, render_left_wrist_cam, replaying_txt)
+            # img_left = ts.observation['images'][render_left_wrist_cam]
+            # view_image(img_left, render_left_wrist_cam, replaying_txt)
             
-            img_right = ts.observation['images'][render_right_wrist_cam]
-            view_image(img_right, render_right_wrist_cam, replaying_txt)
+            # img_right = ts.observation['images'][render_right_wrist_cam]
+            # view_image(img_right, render_right_wrist_cam, replaying_txt)
             
         for t in range(len(joint_traj)): # note: this will increase episode length by 1
             action = joint_traj[t]
@@ -162,11 +162,11 @@ def main(args):
                 img_top = ts.observation['images'][render_top_cam]
                 view_image(img_top, render_top_cam, replaying_txt)
                 
-                img_left = ts.observation['images'][render_left_wrist_cam]
-                view_image(img_left, render_left_wrist_cam, replaying_txt)
+                # img_left = ts.observation['images'][render_left_wrist_cam]
+                # view_image(img_left, render_left_wrist_cam, replaying_txt)
                 
-                img_right = ts.observation['images'][render_right_wrist_cam]
-                view_image(img_right, render_right_wrist_cam, replaying_txt)
+                # img_right = ts.observation['images'][render_right_wrist_cam]
+                # view_image(img_right, render_right_wrist_cam, replaying_txt)
 
                 cv2.waitKey(1)
                 

@@ -61,5 +61,18 @@ cd detr && pip install -e .
 * touch_left_gripper and not touch_table (박스가 왼손에 닿고, 박스가 들린 경우, 성공적으로 들고 있는 경우) = 4
 
 ## utils
-### sample_box_pose
+### ``sample_box_pose``
 * 박스 위치 랜덤하게 생성
+
+### ``load_data``
+* 
+
+## imitate_episodes
+### ``args``
+* policy_class : policy 선정 (ACT / CNNMLP) 
+
+## assets
+### ``bimanual_viperx_ee_transfer_cube``
+* EE Tracking simulation(Motion Capture)
+
+### ``bimanual_viperx_transfer_cube``
