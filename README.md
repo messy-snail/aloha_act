@@ -1,19 +1,6 @@
-# ACT: Action Chunking with Transformers
+# RBY_ACT
 
-### *New*: [ACT tuning tips](https://docs.google.com/document/d/1FVIZfoALXg_ZkYKaYVh-qOlaXveq5CtvJHXkY25eYhs/edit?usp=sharing)
-TL;DR: if your ACT policy is jerky or pauses in the middle of an episode, just train for longer! Success rate and smoothness can improve way after loss plateaus.
-
-#### Project Website: https://tonyzhaozh.github.io/aloha/
-
-This repo contains the implementation of ACT, together with 2 simulated environments:
-Transfer Cube and Bimanual Insertion. You can train and evaluate ACT in sim or real.
-For real, you would also need to install [ALOHA](https://github.com/tonyzhaozh/aloha).
-
-### Updates:
-You can find all scripted/human demo for simulated environments [here](https://drive.google.com/drive/folders/1gPR03v05S1xiInoVJn7G7VJ9pDCnxq9O?usp=share_link).
-
-
-### Repo Structure
+## Repo Structure
 - ``imitate_episodes.py`` Train and Evaluate ACT
 - ``policy.py`` An adaptor for ACT policy
 - ``detr`` Model definitions of ACT, modified from DETR
@@ -24,66 +11,55 @@ You can find all scripted/human demo for simulated environments [here](https://d
 - ``utils.py`` Utils such as data loading and helper functions
 - ``visualize_episodes.py`` Save videos from a .hdf5 dataset
 
+## Installation
+```bash
+# install package
+pip install torchvision torch pyquaternion pyyaml rospkg pexpect mujoco==2.3.7 dm_control==1.0.14 opencv-python matplotlib einops packaging h5py ipython
 
-### Installation
+cd detr && pip install -e .
+```
 
-    conda create -n aloha python=3.8.10
-    conda activate aloha
-    pip install torchvision
-    pip install torch
-    pip install pyquaternion
-    pip install pyyaml
-    pip install rospkg
-    pip install pexpect
-    pip install mujoco==2.3.7
-    pip install dm_control==1.0.14
-    pip install opencv-python
-    pip install matplotlib
-    pip install einops
-    pip install packaging
-    pip install h5py
-    pip install ipython
-    cd act/detr && pip install -e .
+## record_sim_episodes
+* 시뮬레이션 환경에서 dataset 생성
+* Camera는 Top, Angle, Vis 제공. joint camera view는 없음
+* 여기서 카메라는 관측용, 실제 학습 데이터와 상관 x
 
-### Example Usages
+## cv_record_sim_episodes
+* 위와 동일, matplot부분만 cv로 변경
+* 시뮬레이션 환경에서 dataset 생성
+* Camera는 Top, Angle, Vis 제공. joint camera view는 없음
+* 여기서 카메라는 관측용, 실제 학습 데이터와 상관 x
 
-To set up a new terminal, run:
+## scripted_policy
+### ``Type``
+* trajectory: time(1), pos(3), quat(4), gripper(1)
+* mocap_pose_right, mocap_pose_left : pos(3), quat(4)
+* env_state(box) : pos(3), quat(4)
+* gripper: open/close
 
-    conda activate aloha
-    cd <path to act repo>
+* waypoint 사이의 값은 interpolation한 값을 사용
+* interpolation은 curr과 next의 비율을 통해 수행
 
-### Simulated experiments
+## ee_sim_env
+* End Effector Tracking 기반 시뮬레이션 환경 생성  
+* top view만 생성
+### ``get_observation``
+* 관측결과 반환
+* qpos, qvel, env_state(box), images
 
-We use ``sim_transfer_cube_scripted`` task in the examples below. Another option is ``sim_insertion_scripted``.
-To generated 50 episodes of scripted data, run:
+### ``get_reward``
+* reward 반환
+* Task마다 상이
 
-    python3 record_sim_episodes.py \
-    --task_name sim_transfer_cube_scripted \
-    --dataset_dir <data save dir> \
-    --num_episodes 50
+### ``TransferCubeEETask``
+* 오른손으로 잡아서 왼손으로 옮기는 행위 수행
 
-To can add the flag ``--onscreen_render`` to see real-time rendering.
-To visualize the episode after it is collected, run
+#### ``Rewards``
+* touch_right_gripper(박스가 오른손에 닿은 경우) = 1
+* touch_right_gripper and not touch_table (박스가 오른손에 닿고, 박스가 들린 경우) = 2
+* touch_left_gripper (박스가 왼손에 닿은 경우)= 3
+* touch_left_gripper and not touch_table (박스가 왼손에 닿고, 박스가 들린 경우, 성공적으로 들고 있는 경우) = 4
 
-    python3 visualize_episodes.py --dataset_dir <data save dir> --episode_idx 0
-
-To train ACT:
-    
-    # Transfer Cube task
-    python3 imitate_episodes.py \
-    --task_name sim_transfer_cube_scripted \
-    --ckpt_dir <ckpt dir> \
-    --policy_class ACT --kl_weight 10 --chunk_size 100 --hidden_dim 512 --batch_size 8 --dim_feedforward 3200 \
-    --num_epochs 2000  --lr 1e-5 \
-    --seed 0
-
-
-To evaluate the policy, run the same command but add ``--eval``. This loads the best validation checkpoint.
-The success rate should be around 90% for transfer cube, and around 50% for insertion.
-To enable temporal ensembling, add flag ``--temporal_agg``.
-Videos will be saved to ``<ckpt_dir>`` for each rollout.
-You can also add ``--onscreen_render`` to see real-time rendering during evaluation.
-
-For real-world data where things can be harder to model, train for at least 5000 epochs or 3-4 times the length after the loss has plateaued.
-Please refer to [tuning tips](https://docs.google.com/document/d/1FVIZfoALXg_ZkYKaYVh-qOlaXveq5CtvJHXkY25eYhs/edit?usp=sharing) for more info.
-
+## utils
+### sample_box_pose
+* 박스 위치 랜덤하게 생성

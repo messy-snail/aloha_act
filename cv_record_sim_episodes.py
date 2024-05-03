@@ -21,10 +21,18 @@ script_txt = 'Rollout out EE space scripted policy'
 replaying_txt = 'Replaying joint commands'
 txt_org = (10,15)
 font_style = cv2.FONT_HERSHEY_SIMPLEX
-font_scale = 0.7
+font_scale = 0.5
 font_color = (255,255,255)
-font_thickness = 2
+font_thickness = 1
 font_line_type = cv2.LINE_AA
+
+def view_image(img, win_name, txt):
+    result = img.copy()
+    result = cv2.cvtColor(result, cv2.COLOR_RGB2BGR)
+    result = cv2.putText(result, txt, 
+                        txt_org, font_style, font_scale, 
+                        font_color, font_thickness, font_line_type)
+    cv2.imshow(win_name, result)
 
 def main(args):
     """
@@ -41,9 +49,10 @@ def main(args):
     onscreen_render = args['onscreen_render']
     inject_noise = False
     
-    # render_cam_name1 = 'top'
-    render_cam_name2 = 'angle'
-    # render_cam_name3 = 'vis'
+    render_angle_cam = 'angle'
+    render_top_cam = 'top'
+    render_left_wrist_cam = 'left_wrist'
+    render_right_wrist_cam = 'right_wrist'
 
     if not os.path.isdir(dataset_dir):
         os.makedirs(dataset_dir, exist_ok=True)
@@ -67,37 +76,36 @@ def main(args):
         episode = [ts]
         policy = policy_cls(inject_noise)
         # setup plotting
-        if onscreen_render:
-            cv2.namedWindow(render_cam_name2)
-            img2 = ts.observation['images'][render_cam_name2]
-            result = img2.copy()
-            result = cv2.cvtColor(result, cv2.COLOR_RGB2BGR)
-            result = cv2.putText(result, script_txt, 
-                                txt_org, font_style, font_scale, 
-                                font_color, font_thickness, font_line_type)
-            cv2.imshow(render_cam_name2, result)
+        if onscreen_render:           
+            img_angle = ts.observation['images'][render_angle_cam]
+            view_image(img_angle, render_angle_cam, script_txt)
             
-            # ax = plt.subplot()
-            # plt_img = ax.imshow(ts.observation['images'][render_cam_name])
-            # plt.ion()
+            img_top = ts.observation['images'][render_top_cam]
+            view_image(img_top, render_top_cam, script_txt)
+            
+            img_left = ts.observation['images'][render_left_wrist_cam]
+            view_image(img_left, render_left_wrist_cam, script_txt)
+            
+            img_right = ts.observation['images'][render_right_wrist_cam]
+            view_image(img_right, render_right_wrist_cam, script_txt)
+
         for step in range(episode_len):
             action = policy(ts)
             ts = env.step(action)
             episode.append(ts)
             if onscreen_render:
-                # img1 = ts.observation['images'][render_cam_name1]
-                # cv2.imshow(render_cam_name1, img1)
-                img2 = ts.observation['images'][render_cam_name2]
-                result = img2.copy()
-                result = cv2.cvtColor(result, cv2.COLOR_RGB2BGR)
-                result = cv2.putText(result, script_txt, 
-                                    txt_org, font_style, font_scale, 
-                                    font_color, font_thickness, font_line_type)
-                cv2.imshow(render_cam_name2, result)
+                img_angle = ts.observation['images'][render_angle_cam]
+                view_image(img_angle, render_angle_cam, script_txt)
+                
+                img_top = ts.observation['images'][render_top_cam]
+                view_image(img_top, render_top_cam, script_txt)
+                
+                img_left = ts.observation['images'][render_left_wrist_cam]
+                view_image(img_left, render_left_wrist_cam, script_txt)
+                
+                img_right = ts.observation['images'][render_right_wrist_cam]
+                view_image(img_right, render_right_wrist_cam, script_txt)
                 cv2.waitKey(1)
-                # plt_img.set_data(ts.observation['images'][render_cam_name])
-                # plt.pause(0.002)
-        # plt.close()
 
         episode_return = np.sum([ts.reward for ts in episode[1:]])
         episode_max_reward = np.max([ts.reward for ts in episode[1:]])
@@ -131,38 +139,37 @@ def main(args):
         episode_replay = [ts]
         # setup plotting
         if onscreen_render:
-            # img1 = ts.observation['images'][render_cam_name1]
-            # cv2.imshow(render_cam_name1, img1)
-            img2 = ts.observation['images'][render_cam_name2]
-            result = img2.copy()
-            result = cv2.putText(result, replaying_txt, 
-                                 txt_org, font_style, font_scale, 
-                                 font_color, font_thickness, font_line_type)
-            cv2.imshow(render_cam_name2, result)
-            # img3 = ts.observation['images'][render_cam_name3]
-            # cv2.imshow(render_cam_name3, img3)
-            # ax = plt.subplot()
-            # plt_img = ax.imshow(ts.observation['images'][render_cam_name])
-            # plt.ion()
+            img_angle = ts.observation['images'][render_angle_cam]
+            view_image(img_angle, render_angle_cam, replaying_txt)
+            
+            img_top = ts.observation['images'][render_top_cam]
+            view_image(img_top, render_top_cam, replaying_txt)
+            
+            img_left = ts.observation['images'][render_left_wrist_cam]
+            view_image(img_left, render_left_wrist_cam, replaying_txt)
+            
+            img_right = ts.observation['images'][render_right_wrist_cam]
+            view_image(img_right, render_right_wrist_cam, replaying_txt)
+            
         for t in range(len(joint_traj)): # note: this will increase episode length by 1
             action = joint_traj[t]
             ts = env.step(action)
             episode_replay.append(ts)
             if onscreen_render:
-                # img1 = ts.observation['images'][render_cam_name1]
-                # cv2.imshow(render_cam_name1, img1)
-                img2 = ts.observation['images'][render_cam_name2]
-                result = img2.copy()
-                result = cv2.putText(result, replaying_txt, 
-                                     txt_org, font_style, font_scale, 
-                                     font_color, font_thickness, font_line_type)
-                cv2.imshow(render_cam_name2, result)
-                # img3 = ts.observation['images'][render_cam_name3]
-                # cv2.imshow(render_cam_name3, img3)
-                cv2.waitKey(1)
-                # plt_img.set_data(ts.observation['images'][render_cam_name])
-                # plt.pause(0.02)
+                img_angle = ts.observation['images'][render_angle_cam]
+                view_image(img_angle, render_angle_cam, replaying_txt)
+                
+                img_top = ts.observation['images'][render_top_cam]
+                view_image(img_top, render_top_cam, replaying_txt)
+                
+                img_left = ts.observation['images'][render_left_wrist_cam]
+                view_image(img_left, render_left_wrist_cam, replaying_txt)
+                
+                img_right = ts.observation['images'][render_right_wrist_cam]
+                view_image(img_right, render_right_wrist_cam, replaying_txt)
 
+                cv2.waitKey(1)
+                
         episode_return = np.sum([ts.reward for ts in episode_replay[1:]])
         episode_max_reward = np.max([ts.reward for ts in episode_replay[1:]])
         if episode_max_reward == env.task.max_reward:
