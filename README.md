@@ -14,7 +14,10 @@
 ## Installation
 ```bash
 # install package
-pip install torchvision torch pyquaternion pyyaml rospkg pexpect mujoco==2.3.7 dm_control==1.0.14 opencv-python matplotlib einops packaging h5py ipython
+# pip install torchvision torch pyquaternion pyyaml rospkg pexpect mujoco==2.3.7 dm_control==1.0.14 opencv-python matplotlib einops packaging h5py ipython
+
+# mujoco, dm_control 최신버전으로 설치 시 동작은 하나, 제어기가 이상함
+pip install torchvision torch pyquaternion pyyaml rospkg pexpect mujoco dm_control opencv-python matplotlib einops packaging h5py ipython
 
 cd detr && pip install -e .
 ```
@@ -27,8 +30,7 @@ cd detr && pip install -e .
 ## cv_record_sim_episodes
 * 위와 동일, matplot부분만 cv로 변경
 * 시뮬레이션 환경에서 dataset 생성
-* Camera는 Top, Angle, Vis 제공. joint camera view는 없음
-* 여기서 카메라는 관측용, 실제 학습 데이터와 상관 x
+* Camera는 constants.py에서 camera_names에 따라서 결정
 
 ## scripted_policy
 ### ``Type``
@@ -43,6 +45,24 @@ cd detr && pip install -e .
 ## ee_sim_env
 * End Effector Tracking 기반 시뮬레이션 환경 생성  
 * top view만 생성
+### ``get_qpos``
+* qpos_raw: [0, 15]
+* left_qpos_raw: [0, 7] 
+* right_qpos_raw: [8, 15] 
+* left_arm_qpos: left_qpos_raw[0:6]
+* left_gripper_qpos: left_qpos_raw[6]
+* right_arm_qpos: right_qpos_raw[0:6]
+* right_gripper_qpos: right_qpos_raw[6]
+* np.concatenate([left_arm_qpos, left_gripper_qpos, right_arm_qpos, right_gripper_qpos])
+
+* **ALOHA**
+    * env_state = 7
+    * qpos_raw = 23
+
+* **RBY**
+    * env_state = 9
+    * qpos_raw = 25
+
 ### ``get_observation``
 * 관측결과 반환
 * qpos, qvel, env_state(box), images

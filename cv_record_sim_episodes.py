@@ -10,7 +10,7 @@ import h5py
 from constants import PUPPET_GRIPPER_POSITION_NORMALIZE_FN, SIM_TASK_CONFIGS
 from ee_sim_env import make_ee_sim_env
 from sim_env import make_sim_env, BOX_POSE
-from scripted_policy import PickAndTransferPolicy, InsertionPolicy
+from scripted_policy import PickAndTransferPolicy, InsertionPolicy, RbyPickAndTransferPolicy
 
 import cv2
 
@@ -51,6 +51,7 @@ def main(args):
     
     render_angle_cam = 'angle'
     render_top_cam = 'top'
+    render_left_pillar_cam = 'left_pillar'
     # render_left_wrist_cam = 'left_wrist'
     # render_right_wrist_cam = 'right_wrist'
 
@@ -63,6 +64,8 @@ def main(args):
         policy_cls = PickAndTransferPolicy
     elif task_name == 'sim_insertion_scripted':
         policy_cls = InsertionPolicy
+    elif task_name == 'sim_rby_task1_scripted':
+        policy_cls = RbyPickAndTransferPolicy
     else:
         raise NotImplementedError
 
@@ -83,6 +86,9 @@ def main(args):
             img_top = ts.observation['images'][render_top_cam]
             view_image(img_top, render_top_cam, script_txt)
             
+            img_left_pillar = ts.observation['images'][render_left_pillar_cam]
+            view_image(img_left_pillar, render_left_pillar_cam, script_txt)
+            
             # img_left = ts.observation['images'][render_left_wrist_cam]
             # view_image(img_left, render_left_wrist_cam, script_txt)
             
@@ -99,6 +105,9 @@ def main(args):
                 
                 img_top = ts.observation['images'][render_top_cam]
                 view_image(img_top, render_top_cam, script_txt)
+                
+                img_left_pillar = ts.observation['images'][render_left_pillar_cam]
+                view_image(img_left_pillar, render_left_pillar_cam, script_txt)
                 
                 # img_left = ts.observation['images'][render_left_wrist_cam]
                 # view_image(img_left, render_left_wrist_cam, script_txt)
@@ -139,8 +148,8 @@ def main(args):
         episode_replay = [ts]
         # setup plotting
         if onscreen_render:
-            img_angle = ts.observation['images'][render_angle_cam]
-            view_image(img_angle, render_angle_cam, replaying_txt)
+            # img_angle = ts.observation['images'][render_angle_cam]
+            # view_image(img_angle, render_angle_cam, replaying_txt)
             
             img_top = ts.observation['images'][render_top_cam]
             view_image(img_top, render_top_cam, replaying_txt)
@@ -156,8 +165,8 @@ def main(args):
             ts = env.step(action)
             episode_replay.append(ts)
             if onscreen_render:
-                img_angle = ts.observation['images'][render_angle_cam]
-                view_image(img_angle, render_angle_cam, replaying_txt)
+                # img_angle = ts.observation['images'][render_angle_cam]
+                # view_image(img_angle, render_angle_cam, replaying_txt)
                 
                 img_top = ts.observation['images'][render_top_cam]
                 view_image(img_top, render_top_cam, replaying_txt)

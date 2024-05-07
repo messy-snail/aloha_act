@@ -1,11 +1,12 @@
 <mujocoinclude>
     <compiler angle="radian" inertiafromgeom="auto" inertiagrouprange="4 5" />
-
+    <!-- <option timestep="0.005" solver="CG" iterations="30" tolerance="1e-6"/> -->
     <default>
         <default class="rb">
             <material specular="0.5" shininess="0.25" />
-            <joint armature="10" damping="5" range="-3.14 3.14" />
-            <position kp="20" gear="5" ctrlrange="-3.14 3.14" forcerange="-10 10" />
+            <!-- <joint armature="10" damping="5" range="-3.14 3.14" /> -->
+            <position ctrlrange="-3.14 3.14"/>
+            <!-- <position kp="20" gear="5" ctrlrange="-3.14 3.14" forcerange="-10 10" /> -->
 
             <default class="visual">
                 <geom group="2" type="mesh" contype="0" conaffinity="0" />

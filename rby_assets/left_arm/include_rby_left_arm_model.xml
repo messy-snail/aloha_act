@@ -13,7 +13,7 @@
 
         <inertial pos="0.18478 -0.15233 1.0767" mass="1.0" diaginertia="1 1 1" />
         <joint name="left_arm_1_joint" pos="0.083 -0.154 1.04"
-            axis="0.944200181445777 0 0.329372156318292" />
+            axis="0.944200181445777 0 0.329372156318292" frictionloss="60" />
 
         <body name="left_arm_2">
             <geom mesh="left_arm_2_0" material="75,75,75_67.001" class="visual" />
@@ -26,7 +26,7 @@
             <geom mesh="left_arm_2_3" class="collision" /> -->
 
             <inertial pos="0.22495 -0.1403 1.0664" mass="1.0" diaginertia="1 1 1" />
-            <joint name="left_arm_2_joint" pos="0.22 -0.22 1.09" axis="0 -1 0" />
+            <joint name="left_arm_2_joint" pos="0.22 -0.22 1.09" axis="0 -1 0" frictionloss="60" />
 
             <body name="left_arm_3">
                 <geom mesh="left_arm_3_0" material="69,69,69_9.001" class="visual" />
@@ -51,7 +51,7 @@
                 <geom mesh="left_arm_3_9" class="collision" /> -->
 
                 <inertial pos="0.2221 -0.15571 0.88123" mass="1.0" diaginertia="1 1 1" />
-                <joint name="left_arm_3_joint" pos="0.22 -0.154 0.99" axis="0 0 1" />
+                <joint name="left_arm_3_joint" pos="0.22 -0.154 0.99" axis="0 0 1" frictionloss="60" />
 
                 <body name="left_arm_4">
                     <geom mesh="left_arm_4_0" material="39,39,39_8.001" class="visual" />
@@ -71,7 +71,7 @@
                     <!-- <joint name="left_arm_4_joint" pos="0.282 -0.185 0.814" axis="1 0 0"
                         ref="-1.90949408420305" /> -->
                     <joint name="left_arm_4_joint" pos="0.282 -0.185 0.814" axis="1 0 0"
-                        ref="0" />
+                        ref="0" frictionloss="60" />
 
                     <body name="left_arm_5">
                         <geom mesh="left_arm_5_0" material="247,247,247_50.001" class="visual" />
@@ -89,7 +89,7 @@
 
                         <inertial pos="0.24074 -0.39082 0.85342" mass="1.0" diaginertia="1 1 1" />
                         <joint name="left_arm_5_joint" pos="0.22 -0.243 0.801"
-                            axis="0 0.943188038541758 -0.332259422668118" />
+                            axis="0 0.943188038541758 -0.332259422668118" frictionloss="60" />
 
                         <body name="left_arm_6">
                             <geom mesh="left_arm_6_0" material="75,75,75_56.001" class="visual" />
@@ -119,7 +119,7 @@
                                 ref="1.206239456233958" /> -->
 
                             <joint name="left_arm_6_joint" pos="0.254 -0.436 0.869" axis="1 0 0"
-                                ref="0" />
+                                ref="0" frictionloss="60" />
 
                             <body name="left_arm_7">
                                 <geom mesh="left_arm_7_0" material="70,70,70_2.001" class="visual" />
@@ -134,7 +134,7 @@
                                 <!-- <joint name="left_arm_7_joint" pos="0.22 -0.489265 0.807236"
                                     axis="0 0.648977564336161 0.760807545301901" ref="1.570796327" /> -->
                                 <joint name="left_arm_7_joint" pos="0.22 -0.489265 0.807236"
-                                    axis="0 0.648977564336161 0.760807545301901" ref="0" />
+                                    axis="0 0.648977564336161 0.760807545301901" ref="0" frictionloss="60" />
 
                                 <site name="left_tcp" pos="0.22 -0.578 0.709"
                                     euler="-0.706239456233958 0 -1.570796327" />
@@ -149,7 +149,7 @@
                                         diaginertia="0.01 0.01 0.01" />
                                     <joint name="left_arm_f1_joint" type="slide"
                                         pos="0.282 -0.572 0.704" axis="1 0 0"
-                                        range="0 0.05" limited="true"/>
+                                        range="0 0.05" limited="true" frictionloss="30"/>
                                 </body>
 
                                 <body name="left_arm_f2">
@@ -162,7 +162,7 @@
                                         diaginertia="0.01 0.01 0.01" />
                                     <joint name="left_arm_f2_joint" type="slide"
                                         pos="0.282 -0.572 0.704" axis="1 0 0"
-                                        range="-0.05 0" limited="true"/>
+                                        range="-0.05 0" limited="true" frictionloss="30"/>
                                 </body>
                             </body>
                         </body>

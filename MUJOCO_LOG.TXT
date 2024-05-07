@@ -4,3 +4,12 @@ WARNING: mju_openResource: unknown file './rby_transfer_cube.xml'
 Fri May  3 14:51:47 2024
 WARNING: mju_openResource: unknown file 'rby_transfer_cube.xml'
 
+Tue May  7 14:02:08 2024
+WARNING: mju_openResource: unknown file 'path_to_your_model.xml'
+
+Tue May  7 14:04:11 2024
+WARNING: mju_openResource: unknown file 'c:/rby_assets/rby_transfer_cube.xml'
+
+Tue May  7 14:04:51 2024
+WARNING: mju_openResource: unknown file 'c:/rby_assets/rby_transfer_cube.xml'
+

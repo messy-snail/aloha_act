@@ -1,0 +1,64 @@
+<mujoco model="rby_ee_transfer_cube">
+    <include file="scene.xml"/>
+    <include file="include_rby_dependencies.xml"/>
+
+    <equality>
+        <weld body1="mocap_left" body2="left_arm_7" solref="0.01 1" solimp=".25 .25 0.001" />
+        <weld body1="mocap_right" body2="right_arm_7" solref="0.01 1" solimp=".25 .25 0.001" />
+    </equality>
+    <!-- <equality>
+        <weld body1="mocap_left" body2="left_arm_f1" solref="0.01 1" solimp=".25 .25 0.001" />
+        <weld body1="mocap_right" body2="right_arm_f1" solref="0.01 1" solimp=".25 .25 0.001" />
+    </equality> -->
+    <!-- <equality>
+        <joint name="left_arm_f" joint1="left_arm_f1_joint" joint2="left_arm_f2_joint" polycoef="0 -1 0 0 0" />
+        <joint name="right_arm_f" joint1="right_arm_f1_joint" joint2="right_arm_f2_joint" polycoef="0 -1 0 0 0" />
+    </equality> -->
+    <worldbody>
+        <include file="left_arm/include_rby_left_arm_model.xml" />
+        <include file="right_arm/include_rby_right_arm_model.xml" />
+
+        <!-- <body mocap="true" name="mocap_left" pos="0.095 0.50 0.425">
+            <site pos="0 0 0" size="0.003 0.003 0.03" type="box" name="mocap_left_site1" rgba="1 0 0 1"/>
+            <site pos="0 0 0" size="0.003 0.03 0.003" type="box" name="mocap_left_site2" rgba="1 0 0 1"/>
+            <site pos="0 0 0" size="0.03 0.003 0.003" type="box" name="mocap_left_site3" rgba="1 0 0 1"/>
+        </body>
+        <body mocap="true" name="mocap_right" pos="-0.095 0.50 0.425">
+            <site pos="0 0 0" size="0.003 0.003 0.03" type="box" name="mocap_right_site1" rgba="0 0 1 1"/>
+            <site pos="0 0 0" size="0.003 0.03 0.003" type="box" name="mocap_right_site2" rgba="0 0 1 1"/>
+            <site pos="0 0 0" size="0.03 0.003 0.003" type="box" name="mocap_right_site3" rgba="0 0 1 1"/>
+        </body> -->
+        <body mocap="true" name="mocap_left" pos="0.282 -0.572 0.704">
+            <site pos="0 0 0" size="0.003 0.003 0.03" type="box" name="mocap_left_site1" rgba="1 0 0 1"/>
+            <site pos="0 0 0" size="0.003 0.03 0.003" type="box" name="mocap_left_site2" rgba="1 0 0 1"/>
+            <site pos="0 0 0" size="0.03 0.003 0.003" type="box" name="mocap_left_site3" rgba="1 0 0 1"/>
+        </body>
+        <body mocap="true" name="mocap_right" pos="-0.282 -0.578 0.709">
+            <site pos="0 0 0" size="0.003 0.003 0.03" type="box" name="mocap_right_site1" rgba="0 0 1 1"/>
+            <site pos="0 0 0" size="0.003 0.03 0.003" type="box" name="mocap_right_site2" rgba="0 0 1 1"/>
+            <site pos="0 0 0" size="0.03 0.003 0.003" type="box" name="mocap_right_site3" rgba="0 0 1 1"/>
+        </body>
+        
+        <!-- <body name="box" pos="0.2 0.5 0.05"> -->
+        <body name="box" pos="0.2 -0.6 0.65">
+            <joint name="red_box_joint" type="free" frictionloss="0.01" />
+            <inertial pos="0 0 0" mass="0.05" diaginertia="0.002 0.002 0.002" />
+            <geom condim="4" solimp="2 1 0.01" solref="0.01 1" friction="1 0.005 0.0001" pos="0 0 0" size="0.02 0.02 0.02" type="box" name="red_box" rgba="1 0 0 1" />
+        </body>
+
+    </worldbody>
+
+    <actuator>
+        <position class="rb" ctrllimited="true" ctrlrange="0 0.1" joint="left_arm_f1_joint" kp="200" forcelimited="false"/>
+        <position class="rb" ctrllimited="true" ctrlrange="-0.05 0" joint="left_arm_f2_joint" kp="200" forcelimited="false"/>
+
+        <position class="rb" ctrllimited="true" ctrlrange="0 0.1" joint="right_arm_f1_joint" kp="200" forcelimited="false"/>
+        <position class="rb" ctrllimited="true" ctrlrange="-0.05 0" joint="right_arm_f2_joint" kp="200" forcelimited="false"/>
+    </actuator>
+
+    <!-- <keyframe>
+        <key qpos="0 -0.96 1.16 0 -0.3 0 0.024 -0.024  0 -0.96 1.16 0 -0.3 0 0.024 -0.024  0.2 0.5 0.05 1 0 0 0"/>
+    </keyframe> -->
+
+
+</mujoco>
