@@ -101,13 +101,13 @@ def main(args):
             episode.append(ts)
             if onscreen_render:
                 img_angle = ts.observation['images'][render_angle_cam]
-                view_image(img_angle, render_angle_cam, script_txt)
+                view_image(img_angle, render_angle_cam, script_txt + f' step: {step}')
                 
                 img_top = ts.observation['images'][render_top_cam]
-                view_image(img_top, render_top_cam, script_txt)
+                view_image(img_top, render_top_cam, script_txt + f' step: {step}')
                 
                 img_left_pillar = ts.observation['images'][render_left_pillar_cam]
-                view_image(img_left_pillar, render_left_pillar_cam, script_txt)
+                view_image(img_left_pillar, render_left_pillar_cam, script_txt + f' step: {step}')
                 
                 # img_left = ts.observation['images'][render_left_wrist_cam]
                 # view_image(img_left, render_left_wrist_cam, script_txt)

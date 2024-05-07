@@ -188,7 +188,7 @@
                                     <inertial pos="-0.16471 -0.5604 0.72393" mass="0.01"
                                         diaginertia="0.01 0.01 0.01" />
                                     <joint name="right_arm_f1_joint" type="slide"
-                                        pos="-0.282 -0.578 0.709" axis="-1 0 0" range="0 0.05" limited="true" frictionloss="30"/>
+                                        pos="-0.282 -0.578 0.709" axis="-1 0 0" range="-0.05 0" limited="true" frictionloss="10" ref="-0.05"/>
                                 </body>
 
                                 <body name="right_arm_f2">
@@ -202,7 +202,7 @@
                                     <inertial pos="-0.27529 -0.5604 0.72393" mass="0.01"
                                         diaginertia="0.01 0.01 0.01" />
                                     <joint name="right_arm_f2_joint" type="slide"
-                                        pos="-0.282 -0.578 0.709" axis="-1 0 0" range="-0.05 0" limited="true" frictionloss="30"/>
+                                        pos="-0.282 -0.578 0.709" axis="-1 0 0" range="0 0.05" limited="true" frictionloss="10" ref="0.05"/>
                                 </body>
                             </body>
                         </body>

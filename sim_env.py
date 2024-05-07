@@ -178,10 +178,10 @@ class RbyTask(base.Task):
         super().__init__(random=random)
 
     def before_step(self, action, physics):
-        left_arm_action = action[:7]
-        right_arm_action = action[8:8+7]
-        normalized_left_gripper_action = action[7]
-        normalized_right_gripper_action = action[8+7]
+        left_arm_action = action[:6]
+        right_arm_action = action[7:7+6]
+        normalized_left_gripper_action = action[6]
+        normalized_right_gripper_action = action[7+6]
 
         left_gripper_action = PUPPET_GRIPPER_POSITION_UNNORMALIZE_FN(normalized_left_gripper_action)
         right_gripper_action = PUPPET_GRIPPER_POSITION_UNNORMALIZE_FN(normalized_right_gripper_action)
@@ -200,23 +200,23 @@ class RbyTask(base.Task):
     @staticmethod
     def get_qpos(physics):
         qpos_raw = physics.data.qpos.copy()
-        left_qpos_raw = qpos_raw[:9]
-        right_qpos_raw = qpos_raw[9:17]
-        left_arm_qpos = left_qpos_raw[:7]
-        right_arm_qpos = right_qpos_raw[:7]
-        left_gripper_qpos = [PUPPET_GRIPPER_POSITION_NORMALIZE_FN(left_qpos_raw[7])]
-        right_gripper_qpos = [PUPPET_GRIPPER_POSITION_NORMALIZE_FN(right_qpos_raw[7])]
+        left_qpos_raw = qpos_raw[:8]
+        right_qpos_raw = qpos_raw[8:16]
+        left_arm_qpos = left_qpos_raw[:6]
+        right_arm_qpos = right_qpos_raw[:6]
+        left_gripper_qpos = [PUPPET_GRIPPER_POSITION_NORMALIZE_FN(left_qpos_raw[6])]
+        right_gripper_qpos = [PUPPET_GRIPPER_POSITION_NORMALIZE_FN(right_qpos_raw[6])]
         return np.concatenate([left_arm_qpos, left_gripper_qpos, right_arm_qpos, right_gripper_qpos])
 
     @staticmethod
     def get_qvel(physics):
         qvel_raw = physics.data.qvel.copy()
-        left_qvel_raw = qvel_raw[:9]
-        right_qvel_raw = qvel_raw[9:17]
-        left_arm_qvel = left_qvel_raw[:7]
-        right_arm_qvel = right_qvel_raw[:7]
-        left_gripper_qvel = [PUPPET_GRIPPER_VELOCITY_NORMALIZE_FN(left_qvel_raw[7])]
-        right_gripper_qvel = [PUPPET_GRIPPER_VELOCITY_NORMALIZE_FN(right_qvel_raw[7])]
+        left_qvel_raw = qvel_raw[:8]
+        right_qvel_raw = qvel_raw[8:16]
+        left_arm_qvel = left_qvel_raw[:6]
+        right_arm_qvel = right_qvel_raw[:6]
+        left_gripper_qvel = [PUPPET_GRIPPER_VELOCITY_NORMALIZE_FN(left_qvel_raw[6])]
+        right_gripper_qvel = [PUPPET_GRIPPER_VELOCITY_NORMALIZE_FN(right_qvel_raw[6])]
         return np.concatenate([left_arm_qvel, left_gripper_qvel, right_arm_qvel, right_gripper_qvel])
 
     @staticmethod
@@ -251,7 +251,7 @@ class RbyTransferCubeTask(RbyTask):
         # reset qpos, control and box position
         with physics.reset_context():
             # physics.named.data.qpos[:16] = RBY_START_ARM_POSE
-            physics.named.data.qpos[:18] = RBY_START_ARM_POSE
+            physics.named.data.qpos[:16] = RBY_START_ARM_POSE
             np.copyto(physics.data.ctrl, RBY_START_ARM_POSE)
             assert BOX_POSE[0] is not None
             physics.named.data.qpos['red_box_joint'] = BOX_POSE[0]

@@ -6,7 +6,7 @@
         <include file="left_arm/include_rby_left_arm_model.xml" />
         <include file="right_arm/include_rby_right_arm_model.xml" />
         
-        <body name="box" pos="0.2 -0.6 0.65">
+        <body name="box" pos="-0.2 -0.6 0.65">
             <joint name="red_box_joint" type="free" frictionloss="0.01" />
             <inertial pos="0 0 0" mass="0.05" diaginertia="0.002 0.002 0.002" />
             <geom condim="4" solimp="2 1 0.01" solref="0.01 1" friction="1 0.005 0.0001" pos="0 0 0" size="0.02 0.02 0.02" type="box" name="red_box" rgba="1 0 0 1" />
@@ -14,6 +14,10 @@
 
     </worldbody>
 
+    <equality>
+        <joint name="left_arm_f" joint1="left_arm_f1_joint" joint2="left_arm_f2_joint" polycoef="0 -1 0 0 0" />
+        <joint name="right_arm_f" joint1="right_arm_f1_joint" joint2="right_arm_f2_joint" polycoef="0 -1 0 0 0" />
+    </equality>
     <!-- <actuator>
         <position ctrllimited="true" ctrlrange="0.021 0.057" joint="include_rby_left/left_arm_f1" kp="200"  user="1"/>
         <position ctrllimited="true" ctrlrange="-0.057 -0.021" joint="include_rby_left/left_arm_f2" kp="200"  user="1"/>
@@ -56,8 +60,8 @@
         <position class="rb" name="left_arm_5_act" joint="left_arm_5_joint" kp="500" gear="1" ctrlrange="-3.14 3.14" forcerange="-300 300" forcelimited="true" ctrllimited="true"/>
         <position class="rb" name="left_arm_6_act" joint="left_arm_6_joint" kp="100" gear="1" ctrlrange="-3.14 3.14" forcerange="-300 300" forcelimited="true" ctrllimited="true"/>
         <position class="rb" name="left_arm_7_act" joint="left_arm_7_joint" kp="100" gear="1" ctrlrange="-3.14 3.14" forcerange="-300 300" forcelimited="true" ctrllimited="true"/>
-        <position class="rb" ctrllimited="true" ctrlrange="0 0.1" joint="left_arm_f1_joint" kp="200" forcelimited="false"  user="1"/>
-        <position class="rb" ctrllimited="true" ctrlrange="-0.05 0" joint="left_arm_f2_joint" kp="200" forcelimited="false"/>
+        <position class="rb" ctrllimited="true" name="left_arm_f_act" joint="left_arm_f1_joint" ctrlrange="-0.05 0.05" forcelimited="false"/>
+        
     
         <position class="rb" name="right_arm_1_act" joint="right_arm_1_joint" kp="1000" gear="1" ctrlrange="-3.14 3.14" forcerange="-300000 300000" forcelimited="true" ctrllimited="true"/>
         <position class="rb" name="right_arm_2_act" joint="right_arm_2_joint" kp="1000" gear="1" ctrlrange="-3.14 3.14" forcerange="-300000 300000" forcelimited="true" ctrllimited="true"/>
@@ -66,10 +70,7 @@
         <position class="rb" name="right_arm_5_act" joint="right_arm_5_joint" kp="500" gear="1" ctrlrange="-3.14 3.14" forcerange="-300 300" forcelimited="true" ctrllimited="true"/>
         <position class="rb" name="right_arm_6_act" joint="right_arm_6_joint" kp="100" gear="1" ctrlrange="-3.14 3.14" forcerange="-300 300" forcelimited="true" ctrllimited="true"/>
         <position class="rb" name="right_arm_7_act" joint="right_arm_7_joint" kp="100" gear="1" ctrlrange="-3.14 3.14" forcerange="-300 300" forcelimited="true" ctrllimited="true"/>
-
-        <position class="rb" ctrllimited="true" ctrlrange="0 0.1" joint="right_arm_f1_joint" kp="200" forcelimited="false"/>
-        <position class="rb" ctrllimited="true" ctrlrange="-0.05 0" joint="right_arm_f2_joint" kp="200" forcelimited="false"/>
-
+        <position class="rb" ctrllimited="true" name="right_arm_f_act" joint="right_arm_f1_joint" ctrlrange="-0.05 0.05" forcelimited="false"/>
       </actuator>
 
     <!-- <keyframe>

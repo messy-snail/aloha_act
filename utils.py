@@ -144,7 +144,7 @@ def sample_box_pose():
 
 def rby_sample_box_pose():
     # pos="0 0 0.5"
-    x_range = [-0.2, 0.0]
+    x_range = [-0.1, -0.3]
     y_range = [-0.8, -0.6]
     z_range = [0.65, 0.65]
 
