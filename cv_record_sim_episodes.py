@@ -7,7 +7,7 @@ matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import h5py
 
-from constants import PUPPET_GRIPPER_POSITION_NORMALIZE_FN, SIM_TASK_CONFIGS
+from constants import PUPPET_GRIPPER_POSITION_NORMALIZE_FN, RBY_PUPPET_GRIPPER_POSITION_NORMALIZE_FN, SIM_TASK_CONFIGS
 from ee_sim_env import make_ee_sim_env
 from sim_env import make_sim_env, BOX_POSE
 from scripted_policy import PickAndTransferPolicy, InsertionPolicy, RbyPickAndTransferPolicy
@@ -128,7 +128,7 @@ def main(args):
         gripper_ctrl_traj = [ts.observation['gripper_ctrl'] for ts in episode]
         for joint, ctrl in zip(joint_traj, gripper_ctrl_traj):
             left_ctrl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[0])
-            right_ctrl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[2])
+            right_ctrl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[2])                
             joint[6] = left_ctrl
             joint[6+7] = right_ctrl
 
@@ -238,9 +238,14 @@ def main(args):
                                          chunks=(1, 480, 640, 3), )
             # compression='gzip',compression_opts=2,)
             # compression=32001, compression_opts=(0, 0, 0, 0, 9, 1, 1), shuffle=False)
-            qpos = obs.create_dataset('qpos', (max_timesteps, 14))
-            qvel = obs.create_dataset('qvel', (max_timesteps, 14))
-            action = root.create_dataset('action', (max_timesteps, 14))
+            if task_name == 'sim_rby_task1_scripted':
+                qpos = obs.create_dataset('qpos', (max_timesteps, 16))
+                qvel = obs.create_dataset('qvel', (max_timesteps, 16))
+                action = root.create_dataset('action', (max_timesteps, 16))    
+            else:
+                qpos = obs.create_dataset('qpos', (max_timesteps, 14))
+                qvel = obs.create_dataset('qvel', (max_timesteps, 14))
+                action = root.create_dataset('action', (max_timesteps, 14))
 
             for name, array in data_dict.items():
                 root[name][...] = array

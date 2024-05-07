@@ -151,7 +151,7 @@ class BimanualViperXEETask(base.Task):
         obs['images']['top'] = physics.render(height=480, width=640, camera_id='top')
         obs['images']['angle'] = physics.render(height=480, width=640, camera_id='angle')
         obs['images']['vis'] = physics.render(height=480, width=640, camera_id='front_close')
-
+        obs['images']['left_pillar'] = physics.render(height=480, width=640, camera_id='left_pillar')
         # used in scripted policy to obtain starting pose
         obs['mocap_pose_left'] = np.concatenate([physics.data.mocap_pos[0], physics.data.mocap_quat[0]]).copy()
         obs['mocap_pose_right'] = np.concatenate([physics.data.mocap_pos[1], physics.data.mocap_quat[1]]).copy()
@@ -183,13 +183,14 @@ class RbyEETask(base.Task):
         # set gripper
         g_left_ctrl = RBY_PUPPET_GRIPPER_POSITION_UNNORMALIZE_FN(action_left[7])
         g_right_ctrl = RBY_PUPPET_GRIPPER_POSITION_UNNORMALIZE_FN(action_right[7])
-        # np.copyto(physics.data.ctrl, np.array([g_left_ctrl, -g_left_ctrl, g_right_ctrl, -g_right_ctrl]))
-        np.copyto(physics.data.ctrl, np.array([g_left_ctrl, g_right_ctrl]))
+        
+        np.copyto(physics.data.ctrl, np.array([-g_left_ctrl, g_left_ctrl, -g_right_ctrl, g_right_ctrl]))
+        # np.copyto(physics.data.ctrl, np.array([g_left_ctrl, g_right_ctrl]))
 
     def initialize_robots(self, physics):
         # reset joint position
         # physics.named.data.qpos[:16] = RBY_START_ARM_POSE
-        physics.named.data.qpos[:16] = RBY_START_ARM_POSE
+        physics.named.data.qpos[:18] = RBY_START_ARM_POSE
 
         # reset mocap to align with end effector
         # to obtain these numbers:
@@ -226,16 +227,13 @@ class RbyEETask(base.Task):
         print(init_right_quat_val)
         
         # reset gripper control
-        # close_gripper_control = np.array([
-        #     PUPPET_GRIPPER_POSITION_CLOSE,
-        #     -PUPPET_GRIPPER_POSITION_CLOSE,
-        #     PUPPET_GRIPPER_POSITION_CLOSE,
-        #     -PUPPET_GRIPPER_POSITION_CLOSE,
-        # ])
         close_gripper_control = np.array([
+            -RBY_PUPPET_GRIPPER_POSITION_CLOSE,
             RBY_PUPPET_GRIPPER_POSITION_CLOSE,
-            RBY_PUPPET_GRIPPER_POSITION_CLOSE
+            -RBY_PUPPET_GRIPPER_POSITION_CLOSE,
+            RBY_PUPPET_GRIPPER_POSITION_CLOSE,
         ])
+        
         np.copyto(physics.data.ctrl, close_gripper_control)
 
     def initialize_episode(self, physics):
@@ -245,23 +243,23 @@ class RbyEETask(base.Task):
     @staticmethod
     def get_qpos(physics):
         qpos_raw = physics.data.qpos.copy()
-        left_qpos_raw = qpos_raw[:8]
-        right_qpos_raw = qpos_raw[8:16]
-        left_arm_qpos = left_qpos_raw[:6]
-        right_arm_qpos = right_qpos_raw[:6]
-        left_gripper_qpos = [RBY_PUPPET_GRIPPER_POSITION_NORMALIZE_FN(left_qpos_raw[6])]
-        right_gripper_qpos = [RBY_PUPPET_GRIPPER_POSITION_NORMALIZE_FN(right_qpos_raw[6])]
+        left_qpos_raw = qpos_raw[:9]
+        right_qpos_raw = qpos_raw[9:18]
+        left_arm_qpos = left_qpos_raw[:7]
+        right_arm_qpos = right_qpos_raw[:7]
+        left_gripper_qpos = [RBY_PUPPET_GRIPPER_POSITION_NORMALIZE_FN(left_qpos_raw[7])]
+        right_gripper_qpos = [RBY_PUPPET_GRIPPER_POSITION_NORMALIZE_FN(right_qpos_raw[7])]
         return np.concatenate([left_arm_qpos, left_gripper_qpos, right_arm_qpos, right_gripper_qpos])
 
     @staticmethod
     def get_qvel(physics):
         qvel_raw = physics.data.qvel.copy()
-        left_qvel_raw = qvel_raw[:8]
-        right_qvel_raw = qvel_raw[8:16]
-        left_arm_qvel = left_qvel_raw[:6]
-        right_arm_qvel = right_qvel_raw[:6]
-        left_gripper_qvel = [RBY_PUPPET_GRIPPER_VELOCITY_NORMALIZE_FN(left_qvel_raw[6])]
-        right_gripper_qvel = [RBY_PUPPET_GRIPPER_VELOCITY_NORMALIZE_FN(right_qvel_raw[6])]
+        left_qvel_raw = qvel_raw[:9]
+        right_qvel_raw = qvel_raw[9:18]
+        left_arm_qvel = left_qvel_raw[:7]
+        right_arm_qvel = right_qvel_raw[:7]
+        left_gripper_qvel = [RBY_PUPPET_GRIPPER_VELOCITY_NORMALIZE_FN(left_qvel_raw[7])]
+        right_gripper_qvel = [RBY_PUPPET_GRIPPER_VELOCITY_NORMALIZE_FN(right_qvel_raw[7])]
         return np.concatenate([left_arm_qvel, left_gripper_qvel, right_arm_qvel, right_gripper_qvel])
 
     @staticmethod
@@ -309,7 +307,8 @@ class RbyTransferCubeEETask(RbyEETask):
 
     @staticmethod
     def get_env_state(physics):
-        env_state = physics.data.qpos.copy()[16:]
+        # env_state = physics.data.qpos.copy()[16:]
+        env_state = physics.data.qpos.copy()[18:]
         return env_state
 
     def get_reward(self, physics):

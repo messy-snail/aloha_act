@@ -7,13 +7,9 @@
         <weld body1="mocap_right" body2="right_arm_7" solref="0.01 1" solimp=".25 .25 0.001" />
     </equality>
     <!-- <equality>
-        <weld body1="mocap_left" body2="left_arm_f1" solref="0.01 1" solimp=".25 .25 0.001" />
-        <weld body1="mocap_right" body2="right_arm_f1" solref="0.01 1" solimp=".25 .25 0.001" />
-    </equality> -->
-    <equality>
         <joint name="left_arm_f" joint1="left_arm_f1_joint" joint2="left_arm_f2_joint" polycoef="0 -1 0 0 0" />
         <joint name="right_arm_f" joint1="right_arm_f1_joint" joint2="right_arm_f2_joint" polycoef="0 -1 0 0 0" />
-    </equality>
+    </equality> -->
     <worldbody>
         <include file="left_arm/include_rby_left_arm_model.xml" />
         <include file="right_arm/include_rby_right_arm_model.xml" />
@@ -49,13 +45,12 @@
     </worldbody>
 
     <actuator>
-        <position class="rb" ctrllimited="true" name="left_arm_f_act" joint="left_arm_f1_joint" ctrlrange="-0.05 0.05" forcelimited="false"/>
-        <position class="rb" ctrllimited="true" name="right_arm_f_act" joint="right_arm_f1_joint" ctrlrange="-0.05 0.05" forcelimited="false"/>
-        <!-- <position class="rb" ctrllimited="true" ctrlrange="-0.05 0.05" joint="left_arm_f" kp="200" forcelimited="false"/>
-        <position class="rb" ctrllimited="true" ctrlrange="-0.05 0.05" joint="right_arm_f" kp="200" forcelimited="false"/> -->
-
-        <!-- <position class="rb" ctrllimited="true" ctrlrange="-0.05 0 " joint="right_arm_f1_joint" kp="200" forcelimited="false"/>
-        <position class="rb" ctrllimited="true" ctrlrange="0 0.05" joint="right_arm_f2_joint" kp="200" forcelimited="false"/> -->
+        <!-- <position class="rb" ctrllimited="true" name="left_arm_f_act" joint="left_arm_f1_joint" ctrlrange="-0.05 0.05" forcelimited="false"/>
+        <position class="rb" ctrllimited="true" name="right_arm_f_act" joint="right_arm_f1_joint" ctrlrange="-0.05 0.05" forcelimited="false"/> -->
+        <position class="rb" name="left_f1_act" ctrllimited="true" ctrlrange="-0.05 0" joint="left_arm_f1_joint" kp="200" forcelimited="false"/>
+        <position class="rb" name="left_f2_act" ctrllimited="true" ctrlrange="0 0.05" joint="left_arm_f2_joint" kp="200" forcelimited="false"/>
+        <position class="rb" name="right_f1_act" ctrllimited="true" ctrlrange="-0.05 0" joint="right_arm_f1_joint" kp="200" forcelimited="false"/>
+        <position class="rb" name="right_f2_act" ctrllimited="true" ctrlrange="0 0.05" joint="right_arm_f2_joint" kp="200" forcelimited="false"/>
     </actuator>
 
     <!-- <keyframe>

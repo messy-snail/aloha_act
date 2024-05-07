@@ -46,8 +46,8 @@ START_ARM_POSE = [0, -0.96, 1.16, 0, -0.3, 0, 0.02239, -0.02239,
                   0, -0.96, 1.16, 0, -0.3, 0, 0.02239, -0.02239]
 
 RBY_LEFT_JOINT_NAMES = ["left_arm_1_joint", "left_arm_2_joint", "left_arm_3_joint", "left_arm_4_joint", "left_arm_5_joint", "left_arm_6_joint", "left_arm_7_joint"]
-RBY_START_ARM_POSE = [0, 0, 0, 0, 0, 0, 0, 0, 
-                      0, 0, 0, 0, 0, 0, 0, 0]
+RBY_START_ARM_POSE = [0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                      0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 XML_DIR = str(pathlib.Path(__file__).parent.resolve()) + '/assets/' # note: absolute path
 XML_DIR2 = str(pathlib.Path(__file__).parent.resolve()) + '/rby_assets/' # note: absolute path
@@ -57,8 +57,8 @@ MASTER_GRIPPER_POSITION_OPEN = 0.02417
 MASTER_GRIPPER_POSITION_CLOSE = 0.01244
 PUPPET_GRIPPER_POSITION_OPEN = 0.05800
 PUPPET_GRIPPER_POSITION_CLOSE = 0.01844
-RBY_PUPPET_GRIPPER_POSITION_OPEN = -0.05
-RBY_PUPPET_GRIPPER_POSITION_CLOSE = 0.05
+RBY_PUPPET_GRIPPER_POSITION_OPEN = 0.05
+RBY_PUPPET_GRIPPER_POSITION_CLOSE = 0
 
 # Gripper joint limits (qpos[6])
 MASTER_GRIPPER_JOINT_OPEN = 0.3083

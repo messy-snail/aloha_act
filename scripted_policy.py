@@ -51,7 +51,7 @@ class BasePolicy:
         left_xyz, left_quat, left_gripper = self.interpolate(self.curr_left_waypoint, next_left_waypoint, self.step_count)
         right_xyz, right_quat, right_gripper = self.interpolate(self.curr_right_waypoint, next_right_waypoint, self.step_count)
 
-        # Inject noise
+        # Inject noisen
         if self.inject_noise:
             scale = 0.01
             left_xyz = left_xyz + np.random.uniform(-scale, scale, left_xyz.shape)
@@ -77,14 +77,15 @@ class RbyPickAndTransferPolicy(BasePolicy):
         gripper_pick_quat = Quaternion(init_mocap_pose_right[3:])
         
         # Pitch -60 deg 회전
-        # gripper_pick_quat = gripper_pick_quat * Quaternion(axis=[0.0, 1.0, 0.0], degrees=-90)
+        # gripper_pick_quat = gripper_pick_quat * Quaternion(axis=[0.0, 1.0, 0.0], degrees=-30)
+        gripper_pick_quat = gripper_pick_quat * Quaternion(axis=[1.0, 0.0, 0.0], degrees=-30)
         
         # Roll 90 deg 회전
         # meet_left_quat = Quaternion(axis=[1.0, 0.0, 0.0], degrees=90)
         meet_left_quat = Quaternion(axis=[0.0, 1.0, 0.0], degrees=90)
 
         # meet_xyz = np.array([0, 0.5, 0.25])
-        meet_xyz = np.array([0, -0.7, 0.704])
+        meet_xyz = np.array([0, -0.7, 0.754])
 
         self.left_trajectory = [
             {"t": 0, "xyz": init_mocap_pose_left[:3], "quat": init_mocap_pose_left[3:], "gripper": 0}, # sleep
@@ -97,10 +98,10 @@ class RbyPickAndTransferPolicy(BasePolicy):
         
         self.right_trajectory = [
             {"t": 0, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0}, # sleep
-            {"t": 90, "xyz": box_xyz + np.array([-0.04, 0, 0.08]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach the cube
-            {"t": 130, "xyz": box_xyz + np.array([-0.04, 0, -0.015]), "quat": gripper_pick_quat.elements, "gripper": 1}, # go down
-            {"t": 170, "xyz": box_xyz + np.array([-0.04, 0, -0.015]), "quat": gripper_pick_quat.elements, "gripper": 0}, # close gripper
-            {"t": 200, "xyz": meet_xyz + np.array([-0.06, 0, 0]), "quat": gripper_pick_quat.elements, "gripper": 0}, # approach meet position
+            {"t": 90, "xyz": box_xyz + np.array([-0.055, -0.02, 0.02]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach the cube
+            {"t": 130, "xyz": box_xyz + np.array([-0.055, -0.02, -0.05]), "quat": gripper_pick_quat.elements, "gripper": 1}, # go down
+            {"t": 170, "xyz": box_xyz + np.array([-0.055, -0.02, -0.05]), "quat": gripper_pick_quat.elements, "gripper": 0}, # close gripper
+            {"t": 200, "xyz": meet_xyz + np.array([0.04, -0.02, 0]), "quat": gripper_pick_quat.elements, "gripper": 0}, # approach meet position
             {"t": 220, "xyz": meet_xyz, "quat": gripper_pick_quat.elements, "gripper": 0}, # move to meet position
             {"t": 310, "xyz": meet_xyz, "quat": gripper_pick_quat.elements, "gripper": 1}, # open gripper
             {"t": 360, "xyz": meet_xyz + np.array([-0.3, 0, 0]), "quat": gripper_pick_quat.elements, "gripper": 1}, # move to right
@@ -220,6 +221,8 @@ def test_policy(task_name):
         env = make_ee_sim_env('sim_transfer_cube')
     elif 'sim_insertion' in task_name:
         env = make_ee_sim_env('sim_insertion')
+    elif 'sim_rby_task1_scripted' in task_name:
+        env = make_ee_sim_env('sim_rby_task1_scripted')
     else:
         raise NotImplementedError
 
@@ -230,8 +233,15 @@ def test_policy(task_name):
             ax = plt.subplot()
             plt_img = ax.imshow(ts.observation['images']['angle'])
             plt.ion()
-
-        policy = PickAndTransferPolicy(inject_noise)
+        policy = None
+        if 'sim_transfer_cube' in task_name:
+            policy = PickAndTransferPolicy(inject_noise)
+        elif 'sim_insertion' in task_name:
+            policy = InsertionPolicy(inject_noise)
+        elif 'sim_rby_task1_scripted' in task_name:
+            policy = RbyPickAndTransferPolicy(inject_noise)
+        else:
+            raise NotImplementedError
         for step in range(episode_len):
             action = policy(ts)
             ts = env.step(action)
@@ -249,6 +259,6 @@ def test_policy(task_name):
 
 
 if __name__ == '__main__':
-    test_task_name = 'sim_transfer_cube_scripted'
+    test_task_name = 'sim_rby_task1_scripted'
     test_policy(test_task_name)
 
