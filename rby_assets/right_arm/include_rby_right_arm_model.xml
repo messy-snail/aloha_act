@@ -1,0 +1,214 @@
+<mujocoinclude>
+    <body name="right_arm_1">
+        <geom mesh="right_arm_1_0" material="75,75,75_24.001" class="visual" />
+        <geom mesh="right_arm_1_1" material="75,75,75_23.001" class="visual" />
+        <geom mesh="right_arm_1_2" material="75,75,75_21.001" class="visual" />
+        <geom mesh="right_arm_1_3" material="69,69,69_5.001" class="visual" />
+        <geom mesh="right_arm_1_4" material="39,39,39_3.003" class="visual" />
+        <!-- <geom mesh="right_arm_1/right_arm_1_0" class="collision" />
+        <geom mesh="right_arm_1/right_arm_1_1" class="collision" />
+        <geom mesh="right_arm_1/right_arm_1_2" class="collision" />
+        <geom mesh="right_arm_1/right_arm_1_3" class="collision" />
+        <geom mesh="right_arm_1/right_arm_1_4" class="collision" /> -->
+
+        <inertial pos="-0.184783 -0.15232 1.0767" mass="1.0" diaginertia="1 1 1" />
+        <joint name="right_arm_1_joint" pos="-0.066 -0.154 1.033"
+            axis="0.939202304561388 0 -0.343364283388034" />
+
+        <body name="right_arm_2">
+            <geom mesh="right_arm_2_0" material="75,75,75_20.001"
+                class="visual" />
+            <geom mesh="right_arm_2_1" material="75,75,75_19.001"
+                class="visual" />
+            <geom mesh="right_arm_2_2" material="39,39,39_3.004"
+                class="visual" />
+            <geom mesh="right_arm_2_3" material="39,39,39_3.005"
+                class="visual" />
+            <!-- <geom mesh="right_arm_2/right_arm_2_0" class="collision" />
+            <geom mesh="right_arm_2/right_arm_2_1" class="collision" />
+            <geom mesh="right_arm_2/right_arm_2_2" class="collision" />
+            <geom mesh="right_arm_2/right_arm_2_3" class="collision" /> -->
+
+            <inertial pos="-0.22495 -0.14031 1.0664" mass="1.0" diaginertia="1 1 1" />
+            <joint name="right_arm_2_joint" pos="-0.22 -0.22 1.09" axis="0 -1 0" />
+
+            <body name="right_arm_3">
+                <geom mesh="right_arm_3_0" material="69,69,69_6.001"
+                    class="visual" />
+                <geom mesh="right_arm_3_1" material="254,254,255_48.001"
+                    class="visual" />
+                <geom mesh="right_arm_3_2" material="75,75,75_46.001"
+                    class="visual" />
+                <geom mesh="right_arm_3_3" material="75,75,75_45.001"
+                    class="visual" />
+                <geom mesh="right_arm_3_4" material="247,247,247_32.002"
+                    class="visual" />
+                <geom mesh="right_arm_3_5" material="247,247,247_32.003"
+                    class="visual" />
+                <geom mesh="right_arm_3_6" material="75,75,75_47.001"
+                    class="visual" />
+                <geom mesh="right_arm_3_7" material="247,247,247_26.001"
+                    class="visual" />
+                <geom mesh="right_arm_3_8" material="247,247,247_25.001"
+                    class="visual" />
+                <geom mesh="right_arm_3_9" material="247,247,247_24.001"
+                    class="visual" />
+                <!-- <geom mesh="right_arm_3_0" class="collision" />
+                <geom mesh="right_arm_3_1" class="collision" />
+                <geom mesh="right_arm_3_2" class="collision" />
+                <geom mesh="right_arm_3_3" class="collision" />
+                <geom mesh="right_arm_3_4" class="collision" />
+                <geom mesh="right_arm_3_5" class="collision" />
+                <geom mesh="right_arm_3_6" class="collision" />
+                <geom mesh="right_arm_3_7" class="collision" />
+                <geom mesh="right_arm_3_8" class="collision" />
+                <geom mesh="right_arm_3_9" class="collision" /> -->
+
+                <inertial pos="-0.22209 -0.15572 0.88125" mass="1.0" diaginertia="1 1 1" />
+                <joint name="right_arm_3_joint" pos="-0.22 -0.154 1.003" axis="0 0 1" />
+
+                <body name="right_arm_4">
+                    <geom mesh="right_arm_4_0" material="75,75,75_22.001"
+                        class="visual" />
+                    <geom mesh="right_arm_4_1" material="247,247,247_27.001"
+                        class="visual" />
+                    <geom mesh="right_arm_4_2" material="39,39,39_4.004"
+                        class="visual" />
+                    <geom mesh="right_arm_4_3" material="39,39,39_4.005"
+                        class="visual" />
+                    <geom mesh="right_arm_4_4" material="247,247,247_33.001"
+                        class="visual" />
+                    <geom mesh="right_arm_4_5" material="247,247,247_28.001"
+                        class="visual" />
+                    <!-- <geom mesh="right_arm_4_0" class="collision" />
+                    <geom mesh="right_arm_4_1" class="collision" />
+                    <geom mesh="right_arm_4_2" class="collision" />
+                    <geom mesh="right_arm_4_3" class="collision" />
+                    <geom mesh="right_arm_4_4" class="collision" />
+                    <geom mesh="right_arm_4_5" class="collision" /> -->
+
+                    <inertial pos="-0.21946 -0.22943 0.8041" mass="1.0" diaginertia="1 1 1" />
+                    <!-- <joint name="right_arm_4_joint" pos="-0.283 -0.185 0.814" axis="1 0 0"
+                        ref="-1.90949408420305" /> -->
+                    <joint name="right_arm_4_joint" pos="-0.283 -0.185 0.814" axis="1 0 0"
+                        ref="0" />
+
+                    <body name="right_arm_5">
+                        <geom mesh="right_arm_5_0" material="247,247,247_35.001"
+                            class="visual" />
+                        <geom mesh="right_arm_5_1" material="247,247,247_42.001"
+                            class="visual" />
+                        <geom mesh="right_arm_5_2" material="247,247,247_43.001"
+                            class="visual" />
+                        <geom mesh="right_arm_5_3" material="247,247,247_34.001"
+                            class="visual" />
+                        <geom mesh="right_arm_5_4" material="247,247,247_31.001"
+                            class="visual" />
+                        <geom mesh="right_arm_5_5" material="247,247,247_30.001"
+                            class="visual" />
+                        <!-- <geom mesh="right_arm_5_0" class="collision" />
+                        <geom mesh="right_arm_5_1" class="collision" />
+                        <geom mesh="right_arm_5_2" class="collision" />
+                        <geom mesh="right_arm_5_3" class="collision" />
+                        <geom mesh="right_arm_5_4" class="collision" />
+                        <geom mesh="right_arm_5_5" class="collision" /> -->
+
+                        <inertial pos="-0.2407 -0.39083 0.85342" mass="1.0" diaginertia="1 1 1" />
+                        <joint name="right_arm_5_joint" pos="-0.22 -0.243 0.801"
+                            axis="0 0.943188038541758 -0.332259422668118" />
+
+                        <body name="right_arm_6">
+                            <geom mesh="right_arm_6_0" material="75,75,75_48.001"
+                                class="visual" />
+                            <geom mesh="right_arm_6_1" material="75,75,75_53.001"
+                                class="visual" />
+                            <geom mesh="right_arm_6_2" material="75,75,75_50.001"
+                                class="visual" />
+                            <geom mesh="right_arm_6_3" material="75,75,75_49.001"
+                                class="visual" />
+                            <geom mesh="right_arm_6_4" material="39,39,39_4.009"
+                                class="visual" />
+                            <geom mesh="right_arm_6_5" material="254,254,255_49.001"
+                                class="visual" />
+                            <geom mesh="right_arm_6_6" material="75,75,75_54.001"
+                                class="visual" />
+                            <geom mesh="right_arm_6_7" material="247,247,247_29.001"
+                                class="visual" />
+                            <geom mesh="right_arm_6_8" material="152,170,175_8.001"
+                                class="visual" />
+                            <geom mesh="right_arm_6_9" material="75,75,75_52.001"
+                                class="visual" />
+                            <!-- <geom mesh="right_arm_6_0" class="collision" />
+                            <geom mesh="right_arm_6_1" class="collision" />
+                            <geom mesh="right_arm_6_2" class="collision" />
+                            <geom mesh="right_arm_6_3" class="collision" />
+                            <geom mesh="right_arm_6_4" class="collision" />
+                            <geom mesh="right_arm_6_5" class="collision" />
+                            <geom mesh="right_arm_6_6" class="collision" />
+                            <geom mesh="right_arm_6_7" class="collision" />
+                            <geom mesh="right_arm_6_8" class="collision" />
+                            <geom mesh="right_arm_6_9" class="collision" /> -->
+
+                            <inertial pos="-0.2203 -0.45655 0.83284" mass="0.5"
+                                diaginertia="0.5 0.5 0.5" />
+                            <!-- <joint name="right_arm_6_joint" pos="-0.162 -0.436 0.869" axis="1 0 0"
+                                ref="1.206239456233958" /> -->
+                            <joint name="right_arm_6_joint" pos="-0.162 -0.436 0.869" axis="1 0 0"
+                                ref="0" />
+
+                            <body name="right_arm_7">
+                                <geom mesh="right_arm_7_0" material="39,39,39_4.008"
+                                    class="visual" />
+                                <geom mesh="right_arm_7_1" material="70,70,70_1.001"
+                                    class="visual" />
+                                <geom mesh="right_arm_7_2" material="75,75,75_77.001"
+                                    class="visual" />
+                                <geom mesh="right_arm_7_0" class="collision" />
+                                <geom mesh="right_arm_7_1" class="collision" />
+                                <geom mesh="right_arm_7_2" class="collision" />
+
+                                <inertial pos="-0.22289 -0.51939 0.77113" mass="0.1"
+                                    diaginertia="0.1 0.1 0.1" />
+                                <!-- <joint name="right_arm_7_joint" pos="-0.22 -0.489265 0.807236"
+                                    axis="0 0.648977564336161 0.760807545301901" ref="1.570796327" /> -->
+                                <joint name="right_arm_7_joint" pos="-0.22 -0.489265 0.807236"
+                                    axis="0 0.648977564336161 0.760807545301901" ref="0" />
+
+                                <site name="right_tcp" pos="-0.22 -0.578 0.709"
+                                    euler="-0.706239456233958 0 -1.570796327" />
+
+                                <body name="right_arm_f1">
+                                    <geom mesh="right_arm_f1_0" material="70,70,70.001"
+                                        class="visual" />
+                                    <geom mesh="right_arm_f1_1" material="75,75,75.002"
+                                        class="visual" />
+                                    <!-- <geom mesh="right_arm_f1_0" class="collision" />
+                                    <geom mesh="right_arm_f1_1" class="collision" /> -->
+
+                                    <inertial pos="-0.16471 -0.5604 0.72393" mass="0.01"
+                                        diaginertia="0.01 0.01 0.01" />
+                                    <joint name="right_arm_f1_joint" type="slide"
+                                        pos="-0.282 -0.578 0.709" axis="-1 0 0" range="0 0.05" limited="true"/>
+                                </body>
+
+                                <body name="right_arm_f2">
+                                    <geom mesh="right_arm_f2_0" material="70,70,70.002"
+                                        class="visual" />
+                                    <geom mesh="right_arm_f2_1" material="75,75,75.003"
+                                        class="visual" />
+                                    <!-- <geom mesh="right_arm_f2_0" class="collision" />
+                                    <geom mesh="right_arm_f2_1" class="collision" /> -->
+
+                                    <inertial pos="-0.27529 -0.5604 0.72393" mass="0.01"
+                                        diaginertia="0.01 0.01 0.01" />
+                                    <joint name="right_arm_f2_joint" type="slide"
+                                        pos="-0.282 -0.578 0.709" axis="-1 0 0" range="-0.05 0" limited="true"/>
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+    </body>
+</mujocoinclude>

@@ -1,0 +1,31 @@
+<mujocoinclude>
+    <compiler angle="radian" inertiafromgeom="auto" inertiagrouprange="4 5" />
+
+    <default>
+        <default class="rb">
+            <material specular="0.5" shininess="0.25" />
+            <joint armature="10" damping="5" range="-3.14 3.14" />
+            <position kp="20" gear="5" ctrlrange="-3.14 3.14" forcerange="-10 10" />
+
+            <default class="visual">
+                <geom group="2" type="mesh" contype="0" conaffinity="0" />
+            </default>
+
+            <default class="collision">
+                <geom group="3" type="mesh" />
+            </default>
+        </default>
+    </default>
+
+
+    <visual>
+        <map force="0.1" zfar="30" />
+        <rgba haze="0.15 0.25 0.35 1" />
+        <quality shadowsize="2048" />
+        <global offwidth="800" offheight="800" />
+    </visual>
+    <asset>
+        <include file="left_arm/include_rby_left_arm_asset.xml" />
+        <include file="right_arm/include_rby_right_arm_asset.xml" />
+    </asset>
+</mujocoinclude>

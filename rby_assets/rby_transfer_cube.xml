@@ -1,0 +1,85 @@
+<mujoco>
+    <include file="scene.xml"/>
+    <include file="include_rby_dependencies.xml"/>
+
+    <!-- <equality>
+        <weld body1="mocap_left" body2="vx300s_left/gripper_link" solref="0.01 1" solimp=".25 .25 0.001" />
+        <weld body1="mocap_right" body2="vx300s_right/gripper_link" solref="0.01 1" solimp=".25 .25 0.001" />
+    </equality> -->
+    <worldbody>
+        <include file="left_arm/include_rby_left_arm_model.xml" />
+        <include file="right_arm/include_rby_right_arm_model.xml" />
+
+        <body mocap="true" name="mocap_left" pos="0.095 0.50 0.425">
+            <site pos="0 0 0" size="0.003 0.003 0.03" type="box" name="mocap_left_site1" rgba="1 0 0 1"/>
+            <site pos="0 0 0" size="0.003 0.03 0.003" type="box" name="mocap_left_site2" rgba="1 0 0 1"/>
+            <site pos="0 0 0" size="0.03 0.003 0.003" type="box" name="mocap_left_site3" rgba="1 0 0 1"/>
+        </body>
+        <body mocap="true" name="mocap_right" pos="-0.095 0.50 0.425">
+            <site pos="0 0 0" size="0.003 0.003 0.03" type="box" name="mocap_right_site1" rgba="1 0 0 1"/>
+            <site pos="0 0 0" size="0.003 0.03 0.003" type="box" name="mocap_right_site2" rgba="1 0 0 1"/>
+            <site pos="0 0 0" size="0.03 0.003 0.003" type="box" name="mocap_right_site3" rgba="1 0 0 1"/>
+        </body>
+        
+        <!-- <body name="box" pos="0.2 0.5 0.05"> -->
+        <body name="box" pos="0.2 -0.7 0.55">
+            <joint name="red_box_joint" type="free" frictionloss="0.01" />
+            <inertial pos="0 0 0" mass="0.05" diaginertia="0.002 0.002 0.002" />
+            <geom condim="4" solimp="2 1 0.01" solref="0.01 1" friction="1 0.005 0.0001" pos="0 0 0" size="0.02 0.02 0.02" type="box" name="red_box" rgba="1 0 0 1" />
+        </body>
+
+    </worldbody>
+
+    <!-- <actuator>
+        <position ctrllimited="true" ctrlrange="0.021 0.057" joint="include_rby_left/left_arm_f1" kp="200"  user="1"/>
+        <position ctrllimited="true" ctrlrange="-0.057 -0.021" joint="include_rby_left/left_arm_f2" kp="200"  user="1"/>
+    </actuator> -->
+
+    <equality>
+        <joint name="left_arm_f" joint1="left_arm_f1_joint" joint2="left_arm_f2_joint" polycoef="0 -1 0 0 0" />
+        <joint name="right_arm_f" joint1="right_arm_f1_joint" joint2="right_arm_f2_joint" polycoef="0 -1 0 0 0" />
+    </equality>
+
+    <actuator>
+        <!-- <velocity class="rb" name="left_wheel_act" joint="left_wheel_joint" kv="10" gear="1" ctrlrange="-50 50" forcerange="-300 300"/>
+        <velocity class="rb" name="right_wheel_act" joint="right_wheel_joint" kv="10" gear="1" ctrlrange="-50 50" forcerange="-300 300"/> -->
+    
+        <!-- <position class="rb" name="link1_act" joint="link1_joint" kp="30000" kv="100" gear="1" ctrlrange="-0.35 0.35" forcerange="-3000000 3000000"/>
+        <position class="rb" name="link2_act" joint="link2_joint" kp="30000" kv="100" gear="1" ctrlrange="-0.2 1.12" forcerange="-3000000 3000000"/>
+        <position class="rb" name="link3_act" joint="link3_joint" kp="20000" kv="100" gear="1" ctrlrange="-2 1.13" forcerange="-3000000 3000000"/>
+        <position class="rb" name="link4_act" joint="link4_joint" kp="10000" kv="100" gear="1" ctrlrange="-1 2" forcerange="-300000 300000"/>
+        <position class="rb" name="link5_act" joint="link5_joint" kp="10000" kv="100" gear="1" ctrlrange="-1.3 1.3" forcerange="-300000 300000"/>
+        <position class="rb" name="link6_act" joint="link6_joint" kp="10000" kv="100" gear="1" ctrlrange="-3.14 3.14" forcerange="-300000 300000"/> -->
+    
+        <!-- <position class="rb" name="left_arm_1_act" joint="left_arm_1_joint" kp="1000" gear="1" ctrlrange="-3.14 3.14" forcerange="-300000 300000" forcelimited="true" ctrllimited="true"/>
+        <position class="rb" name="left_arm_2_act" joint="left_arm_2_joint" kp="1000" gear="1" ctrlrange="-3.14 3.14" forcerange="-300000 300000" forcelimited="true" ctrllimited="true"/>
+        <position class="rb" name="left_arm_3_act" joint="left_arm_3_joint" kp="1000" gear="1" ctrlrange="-3.14 3.14" forcerange="-300000 300000" forcelimited="true" ctrllimited="true"/>
+        <position class="rb" name="left_arm_4_act" joint="left_arm_4_joint" kp="500" gear="1" ctrlrange="-3.14 3.14" forcerange="-300000 300000" forcelimited="true" ctrllimited="true"/>
+        <position class="rb" name="left_arm_5_act" joint="left_arm_5_joint" kp="500" gear="1" ctrlrange="-3.14 3.14" forcerange="-300 300" forcelimited="true" ctrllimited="true"/>
+        <position class="rb" name="left_arm_6_act" joint="left_arm_6_joint" kp="100" gear="1" ctrlrange="-3.14 3.14" forcerange="-300 300" forcelimited="true" ctrllimited="true"/>
+        <position class="rb" name="left_arm_7_act" joint="left_arm_7_joint" kp="100" gear="1" ctrlrange="-3.14 3.14" forcerange="-300 300" forcelimited="true" ctrllimited="true"/>
+        <motor class="rb" name="left_arm_f_act" joint="left_arm_f1_joint" ctrlrange="-0.01 0.01" forcerange="-0.01 0.01" forcelimited="true" ctrllimited="true"/>
+    
+        <position class="rb" name="right_arm_1_act" joint="right_arm_1_joint" kp="1000" gear="1" ctrlrange="-3.14 3.14" forcerange="-300000 300000" forcelimited="true" ctrllimited="true"/>
+        <position class="rb" name="right_arm_2_act" joint="right_arm_2_joint" kp="1000" gear="1" ctrlrange="-3.14 3.14" forcerange="-300000 300000" forcelimited="true" ctrllimited="true"/>
+        <position class="rb" name="right_arm_3_act" joint="right_arm_3_joint" kp="1000" gear="1" ctrlrange="-3.14 3.14" forcerange="-300000 300000" forcelimited="true" ctrllimited="true"/>
+        <position class="rb" name="right_arm_4_act" joint="right_arm_4_joint" kp="500" gear="1" ctrlrange="-3.14 3.14" forcerange="-300000 300000" forcelimited="true" ctrllimited="true"/>
+        <position class="rb" name="right_arm_5_act" joint="right_arm_5_joint" kp="500" gear="1" ctrlrange="-3.14 3.14" forcerange="-300 300" forcelimited="true" ctrllimited="true"/>
+        <position class="rb" name="right_arm_6_act" joint="right_arm_6_joint" kp="100" gear="1" ctrlrange="-3.14 3.14" forcerange="-300 300" forcelimited="true" ctrllimited="true"/>
+        <position class="rb" name="right_arm_7_act" joint="right_arm_7_joint" kp="100" gear="1" ctrlrange="-3.14 3.14" forcerange="-300 300" forcelimited="true" ctrllimited="true"/>
+        <motor class="rb" name="right_arm_f_act" joint="right_arm_f1_joint" ctrlrange="-0.01 0.01" forcerange="-0.01 0.01" forcelimited="true" ctrllimited="true"/> -->
+
+        <position class="rb" ctrllimited="true" ctrlrange="0 0.05" joint="left_arm_f1_joint" kp="200" forcelimited="false"  user="1"/>
+        <position class="rb" ctrllimited="true" ctrlrange="-0.05 0" joint="left_arm_f2_joint" kp="200" forcelimited="false"/>
+
+        <position class="rb" ctrllimited="true" ctrlrange="0 0.05" joint="right_arm_f1_joint" kp="200" forcelimited="false"/>
+        <position class="rb" ctrllimited="true" ctrlrange="-0.05 0" joint="right_arm_f2_joint" kp="200" forcelimited="false"/>
+
+      </actuator>
+
+    <!-- <keyframe>
+        <key qpos="0 -0.96 1.16 0 -0.3 0 0.024 -0.024  0 -0.96 1.16 0 -0.3 0 0.024 -0.024  0.2 0.5 0.05 1 0 0 0"/>
+    </keyframe> -->
+
+
+</mujoco>
