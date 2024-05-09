@@ -36,7 +36,7 @@ def view_image(img, win_name, txt):
 
 def main(args):
     """
-    Generate demonstration data in simulation.
+    Generate demonstration data in simulationff.
     First rollout the policy (defined in ee space) in ee_sim_env. Obtain the joint trajectory.
     Replace the gripper joint positions with the commanded joint position.
     Replay this joint trajectory (as action sequence) in sim_env, and record all observations.
