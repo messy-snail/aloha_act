@@ -188,9 +188,6 @@ class RbyTask(base.Task):
 
         full_left_gripper_action = [-left_gripper_action, left_gripper_action]
         full_right_gripper_action = [-right_gripper_action, right_gripper_action]
-
-        print(f'left_gripper_action: {left_gripper_action}')
-        print(f'right_gripper_action: {right_gripper_action}')
         
         env_action = np.concatenate([left_arm_action, full_left_gripper_action, right_arm_action, full_right_gripper_action])
         super().before_step(env_action, physics)
