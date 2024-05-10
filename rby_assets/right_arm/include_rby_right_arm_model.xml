@@ -13,7 +13,7 @@
 
         <inertial pos="-0.184783 -0.15232 1.0767" mass="1.0" diaginertia="1 1 1" />
         <joint name="right_arm_1_joint" pos="-0.066 -0.154 1.033"
-            axis="0.939202304561388 0 -0.343364283388034" frictionloss="60"/>
+            axis="0.939202304561388 0 -0.343364283388034" frictionloss="30"/>
 
         <body name="right_arm_2">
             <geom mesh="right_arm_2_0" material="75,75,75_20.001"
@@ -91,7 +91,7 @@
                     <!-- <joint name="right_arm_4_joint" pos="-0.283 -0.185 0.814" axis="1 0 0"
                         ref="-1.90949408420305" /> -->
                     <joint name="right_arm_4_joint" pos="-0.283 -0.185 0.814" axis="1 0 0"
-                        ref="0" frictionloss="60" />
+                        ref="0" frictionloss="30" />
 
                     <body name="right_arm_5">
                         <geom mesh="right_arm_5_0" material="247,247,247_35.001"
@@ -154,7 +154,7 @@
                             <!-- <joint name="right_arm_6_joint" pos="-0.162 -0.436 0.869" axis="1 0 0"
                                 ref="1.206239456233958" /> -->
                             <joint name="right_arm_6_joint" pos="-0.162 -0.436 0.869" axis="1 0 0"
-                                ref="0" frictionloss="60" />
+                                ref="0" frictionloss="20" />
 
                             <body name="right_arm_7">
                                 <geom mesh="right_arm_7_0" material="39,39,39_4.008"
@@ -172,37 +172,37 @@
                                 <!-- <joint name="right_arm_7_joint" pos="-0.22 -0.489265 0.807236"
                                     axis="0 0.648977564336161 0.760807545301901" ref="1.570796327" /> -->
                                 <joint name="right_arm_7_joint" pos="-0.22 -0.489265 0.807236"
-                                    axis="0 0.648977564336161 0.760807545301901" ref="0" frictionloss="30"/>
+                                    axis="0 0.648977564336161 0.760807545301901" ref="0" frictionloss="20"/>
 
                                 <site name="right_tcp" pos="-0.22 -0.578 0.709"
                                     euler="-0.706239456233958 0 -1.570796327" />
 
                                 <body name="right_arm_f1">
-                                    <geom mesh="right_arm_f1_0" material="70,70,70.001"
-                                        class="visual" />
-                                    <geom mesh="right_arm_f1_1" material="75,75,75.002"
-                                        class="visual" />
+                                    <geom mesh="right_arm_f1_0" material="70,70,70.001" class="visual"/>
+                                    <geom mesh="right_arm_f1_1" material="75,75,75.002" class="visual"/>
                                     <geom mesh="right_arm_f1_0" class="collision" />
                                     <geom mesh="right_arm_f1_1" class="collision" />
+                                    <geom condim="4" name="right_arm_f1_0" solimp="2 1 0.01" solref="0.01 1" mesh="right_arm_f1_0" class="collision" />
+                                    <geom condim="4" name="right_arm_f1_1" solimp="2 1 0.01" solref="0.01 1" mesh="right_arm_f1_1" class="collision" />
 
-                                    <inertial pos="-0.16471 -0.5604 0.72393" mass="0.03"
+                                    <inertial pos="-0.16471 -0.5604 0.72393" mass="0.05"
                                         diaginertia="0.01 0.01 0.01" />
                                     <joint name="right_arm_f1_joint" type="slide"
-                                        pos="-0.282 -0.578 0.709" axis="-1 0 0" range="-0.05 0" limited="true" frictionloss="30" ref="-0.05"/>
+                                        pos="-0.282 -0.578 0.709" axis="-1 0 0" range="-0.05 0" limited="true" frictionloss="10" ref="-0.05"/>
                                 </body>
 
                                 <body name="right_arm_f2">
-                                    <geom mesh="right_arm_f2_0" material="70,70,70.002"
-                                        class="visual" />
-                                    <geom mesh="right_arm_f2_1" material="75,75,75.003"
-                                        class="visual" />
+                                    <geom mesh="right_arm_f2_0" material="70,70,70.002" class="visual"/>
+                                    <geom mesh="right_arm_f2_1" material="75,75,75.003" class="visual"/>
                                     <geom mesh="right_arm_f2_0" class="collision" />
                                     <geom mesh="right_arm_f2_1" class="collision" />
+                                    <geom condim="4" name="right_arm_f2_0" solimp="2 1 0.01" solref="0.01 1" mesh="right_arm_f2_0" />
+                                    <geom condim="4" name="right_arm_f2_1" solimp="2 1 0.01" solref="0.01 1" mesh="right_arm_f2_1" />
 
-                                    <inertial pos="-0.27529 -0.5604 0.72393" mass="0.03"
+                                    <inertial pos="-0.27529 -0.5604 0.72393" mass="0.05"
                                         diaginertia="0.01 0.01 0.01" />
                                     <joint name="right_arm_f2_joint" type="slide"
-                                        pos="-0.282 -0.578 0.709" axis="-1 0 0" range="0 0.05" limited="true" frictionloss="30" ref="0.05"/>
+                                        pos="-0.282 -0.578 0.709" axis="-1 0 0" range="0 0.05" limited="true" frictionloss="10" ref="0.05"/>
                                 </body>
                             </body>
                         </body>

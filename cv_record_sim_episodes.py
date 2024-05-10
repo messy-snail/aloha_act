@@ -119,18 +119,24 @@ def main(args):
         episode_return = np.sum([ts.reward for ts in episode[1:]])
         episode_max_reward = np.max([ts.reward for ts in episode[1:]])
         if episode_max_reward == env.task.max_reward:
-            print(f"{episode_idx=} Successful, {episode_return=}")
+            print(f"{episode_idx} Successful, {episode_return}")
         else:
-            print(f"{episode_idx=} Failed")
+            print(f"{episode_idx} Failed")
 
         joint_traj = [ts.observation['qpos'] for ts in episode]
         # replace gripper pose with gripper control
         gripper_ctrl_traj = [ts.observation['gripper_ctrl'] for ts in episode]
         for joint, ctrl in zip(joint_traj, gripper_ctrl_traj):
-            left_ctrl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[0])
-            right_ctrl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[2])                
-            joint[6] = left_ctrl
-            joint[6+7] = right_ctrl
+            if task_name=='sim_rby_task1_scripted':
+                left_ctrl = RBY_PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[0])
+                right_ctrl = RBY_PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[2])                
+                joint[7] = left_ctrl
+                joint[7+8] = right_ctrl
+            else:
+                left_ctrl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[0])
+                right_ctrl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[2])                
+                joint[6] = left_ctrl
+                joint[6+7] = right_ctrl
 
         subtask_info = episode[0].observation['env_state'].copy() # box pose at step 0
 
@@ -148,11 +154,14 @@ def main(args):
         episode_replay = [ts]
         # setup plotting
         if onscreen_render:
-            # img_angle = ts.observation['images'][render_angle_cam]
-            # view_image(img_angle, render_angle_cam, replaying_txt)
+            img_angle = ts.observation['images'][render_angle_cam]
+            view_image(img_angle, render_angle_cam, replaying_txt)
             
             img_top = ts.observation['images'][render_top_cam]
             view_image(img_top, render_top_cam, replaying_txt)
+            
+            # img_left_pillar = ts.observation['images'][render_left_pillar_cam]
+            # view_image(img_left_pillar, render_left_pillar_cam, replaying_txt)
             
             # img_left = ts.observation['images'][render_left_wrist_cam]
             # view_image(img_left, render_left_wrist_cam, replaying_txt)
@@ -165,11 +174,14 @@ def main(args):
             ts = env.step(action)
             episode_replay.append(ts)
             if onscreen_render:
-                # img_angle = ts.observation['images'][render_angle_cam]
-                # view_image(img_angle, render_angle_cam, replaying_txt)
+                img_angle = ts.observation['images'][render_angle_cam]
+                view_image(img_angle, render_angle_cam, replaying_txt)
                 
                 img_top = ts.observation['images'][render_top_cam]
                 view_image(img_top, render_top_cam, replaying_txt)
+                
+                # img_left_pillar = ts.observation['images'][render_left_pillar_cam]
+                # view_image(img_left_pillar, render_left_pillar_cam, replaying_txt)
                 
                 # img_left = ts.observation['images'][render_left_wrist_cam]
                 # view_image(img_left, render_left_wrist_cam, replaying_txt)
@@ -183,12 +195,12 @@ def main(args):
         episode_max_reward = np.max([ts.reward for ts in episode_replay[1:]])
         if episode_max_reward == env.task.max_reward:
             success.append(1)
-            print(f"{episode_idx=} Successful, {episode_return=}")
+            print(f"{episode_idx} Successful, {episode_return}")
         else:
             success.append(0)
-            print(f"{episode_idx=} Failed")
+            print(f"{episode_idx} Failed")
 
-        plt.close()
+        # plt.close()
 
         """
         For each timestep:

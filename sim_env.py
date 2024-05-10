@@ -72,7 +72,7 @@ class BimanualViperXTask(base.Task):
 
         full_left_gripper_action = [left_gripper_action, -left_gripper_action]
         full_right_gripper_action = [right_gripper_action, -right_gripper_action]
-
+        print(f'full_right_gripper_action: {full_right_gripper_action}')
         env_action = np.concatenate([left_arm_action, full_left_gripper_action, right_arm_action, full_right_gripper_action])
         super().before_step(env_action, physics)
         return
@@ -116,7 +116,7 @@ class BimanualViperXTask(base.Task):
         obs['images']['top'] = physics.render(height=480, width=640, camera_id='top')
         obs['images']['angle'] = physics.render(height=480, width=640, camera_id='angle')
         obs['images']['vis'] = physics.render(height=480, width=640, camera_id='front_close')
-
+        
         return obs
 
     def get_reward(self, physics):
@@ -188,7 +188,7 @@ class RbyTask(base.Task):
 
         full_left_gripper_action = [-left_gripper_action, left_gripper_action]
         full_right_gripper_action = [-right_gripper_action, right_gripper_action]
-        
+        # print(f'sim_full_right_gripper_action: {full_right_gripper_action}')
         env_action = np.concatenate([left_arm_action, full_left_gripper_action, right_arm_action, full_right_gripper_action])
         super().before_step(env_action, physics)
         return
@@ -231,6 +231,7 @@ class RbyTask(base.Task):
         obs['images'] = dict()
         obs['images']['top'] = physics.render(height=480, width=640, camera_id='top')
         obs['images']['angle'] = physics.render(height=480, width=640, camera_id='angle')
+        obs['images']['left_pillar'] = physics.render(height=480, width=640, camera_id='left_pillar')
         # obs['images']['vis'] = physics.render(height=480, width=640, camera_id='front_close')
 
         return obs
@@ -274,8 +275,15 @@ class RbyTransferCubeTask(RbyTask):
             contact_pair = (name_geom_1, name_geom_2)
             all_contact_pairs.append(contact_pair)
 
-        touch_left_gripper = ("red_box", "left_arm_f1") in all_contact_pairs
-        touch_right_gripper = ("red_box", "right_arm_f1") in all_contact_pairs
+        touch_left_gripper = ("red_box", "left_arm_f1_0") in all_contact_pairs
+        touch_left_gripper |= ("red_box", "left_arm_f1_1") in all_contact_pairs
+        touch_left_gripper |= ("red_box", "left_arm_f2_0") in all_contact_pairs
+        touch_left_gripper |= ("red_box", "left_arm_f2_1") in all_contact_pairs
+        
+        touch_right_gripper = ("red_box", "right_arm_f1_0") in all_contact_pairs
+        touch_right_gripper |= ("red_box", "right_arm_f1_1") in all_contact_pairs
+        touch_right_gripper |= ("red_box", "right_arm_f2_0") in all_contact_pairs
+        touch_right_gripper |= ("red_box", "right_arm_f2_1") in all_contact_pairs
         touch_table = ("red_box", "table") in all_contact_pairs
 
         reward = 0

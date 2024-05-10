@@ -1,6 +1,8 @@
 <mujocoinclude>
     <compiler angle="radian" inertiafromgeom="auto" inertiagrouprange="4 5" />
     <!-- <option timestep="0.005" solver="CG" iterations="30" tolerance="1e-6"/> -->
+    <option timestep='0.001' iterations="50" tolerance="1e-10" solver="Newton" jacobian="dense" cone="elliptic"/>
+
     <default>
         <default class="rb">
             <material specular="0.5" shininess="0.25" />

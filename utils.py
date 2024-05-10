@@ -145,7 +145,7 @@ def sample_box_pose():
 def rby_sample_box_pose():
     # pos="0 0 0.5"
     x_range = [-0.1, -0.3]
-    y_range = [-0.7, -0.5]
+    y_range = [-0.6, -0.4]
     z_range = [0.65, 0.65]
 
     ranges = np.vstack([x_range, y_range, z_range])

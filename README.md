@@ -16,7 +16,7 @@
 # install package
 # pip install torchvision torch pyquaternion pyyaml rospkg pexpect mujoco==2.3.7 dm_control==1.0.14 opencv-python matplotlib einops packaging h5py ipython
 
-# mujoco, dm_control 최신버전으로 설치 시 동작은 하나, 제어기가 이상함
+# mujoco, dm_control 최신버전으로 설치 시 동작은 하나, 모션이 이상함
 pip install torchvision torch pyquaternion pyyaml rospkg pexpect mujoco dm_control opencv-python matplotlib einops packaging h5py ipython
 
 cd detr && pip install -e .
