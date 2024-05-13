@@ -98,9 +98,9 @@ class RbyPickAndTransferPolicy(BasePolicy):
             {"t": 150, "xyz": meet_xyz + np.array([0.2, 0, -0.02]), "quat": meet_left_quat.elements, "gripper": 0}, # approach meet position
             {"t": 350, "xyz": meet_xyz + np.array([0, 0, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
             {"t": 400, "xyz": meet_xyz + np.array([0, -0.035, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
-            {"t": 460, "xyz": meet_xyz + np.array([-0.055, -0.035, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
-            {"t": 500, "xyz": meet_xyz + np.array([-0.055, -0.035, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
-            {"t": 550, "xyz": meet_xyz + np.array([-0.055, -0.035, 0]), "quat": meet_left_quat2.elements, "gripper": 0}, #Close
+            {"t": 460, "xyz": meet_xyz + np.array([-0.065, -0.045, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
+            {"t": 500, "xyz": meet_xyz + np.array([-0.065, -0.045, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
+            {"t": 550, "xyz": meet_xyz + np.array([-0.065, -0.045, 0]), "quat": meet_left_quat2.elements, "gripper": 0}, #Close
             {"t": 600, "xyz": meet_xyz + np.array([0.04, -0.03, 0]), "quat": meet_left_quat2.elements, "gripper": 0}, # approach meet position
    
         ]
@@ -114,8 +114,9 @@ class RbyPickAndTransferPolicy(BasePolicy):
             {"t": 270, "xyz": box_xyz + np.array([-0.065, -0.025, -0.035]), "quat": gripper_pick_quat.elements, "gripper": 0}, # Grip
             {"t": 320, "xyz": box_xyz + np.array([-0.065, -0.025, 0.08]), "quat": gripper_pick_quat.elements, "gripper": 0}, # Lift Up
             # {"t": 220, "xyz": meet_xyz + np.array([-0.04, 0, -0.0]), "quat": meet_right_quat.elements, "gripper": 0}, # meet #1
-            {"t": 460, "xyz": meet_xyz + np.array([-0.045, 0.0, -0.05]), "quat": meet_right_quat2.elements, "gripper": 0}, # approach hand
-            {"t": 550, "xyz": meet_xyz + np.array([-0.045, 0.0, -0.05]), "quat": meet_right_quat2.elements, "gripper": 1}, # Open
+            {"t": 440, "xyz": meet_xyz + np.array([-0.035, 0.02, -0.05]), "quat": meet_right_quat2.elements, "gripper": 0},
+            {"t": 460, "xyz": meet_xyz + np.array([-0.03, 0.02, -0.05]), "quat": meet_right_quat2.elements, "gripper": 0}, # approach hand
+            {"t": 550, "xyz": meet_xyz + np.array([-0.03, 0.02, -0.05]), "quat": meet_right_quat2.elements, "gripper": 1}, # Open
             {"t": 600, "xyz": meet_xyz + np.array([-0.08, 0.0, -0.05]), "quat": meet_right_quat2.elements, "gripper": 1}, # Finish 
             # {"t": 400, "xyz": meet_xyz + np.array([-0.2, 0, 0.02]), "quat": gripper_pick_quat.elements, "gripper": 0}, 
             # {"t": 260, "xyz": meet_xyz + np.array([-0.2, 0, 0.02]), "quat": meet_right_quat.elements, "gripper": 1}, 

@@ -9,6 +9,17 @@ from .models import build_ACT_model, build_CNNMLP_model
 import IPython
 e = IPython.embed
 
+# 디바이스를 자동으로 선택하는 로직
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+elif torch.backends.mps.is_available():
+    device = torch.device("mps")
+else:
+    device = torch.device("cpu")
+
+print("Using device:", device)
+
+
 def get_args_parser():
     parser = argparse.ArgumentParser('Set transformer detector', add_help=False)
     parser.add_argument('--lr', default=1e-4, type=float) # will be overridden
@@ -75,7 +86,7 @@ def build_ACT_model_and_optimizer(args_override):
         setattr(args, k, v)
 
     model = build_ACT_model(args)
-    model.cuda()
+    model.to(device)
 
     param_dicts = [
         {"params": [p for n, p in model.named_parameters() if "backbone" not in n and p.requires_grad]},
@@ -98,7 +109,7 @@ def build_CNNMLP_model_and_optimizer(args_override):
         setattr(args, k, v)
 
     model = build_CNNMLP_model(args)
-    model.cuda()
+    model.to(device)
 
     param_dicts = [
         {"params": [p for n, p in model.named_parameters() if "backbone" not in n and p.requires_grad]},

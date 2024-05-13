@@ -275,16 +275,28 @@ class RbyTransferCubeTask(RbyTask):
             contact_pair = (name_geom_1, name_geom_2)
             all_contact_pairs.append(contact_pair)
 
-        touch_left_gripper = ("red_box", "left_arm_f1_0") in all_contact_pairs
+        touch_left_gripper =  ("red_box", "left_arm_f1_0") in all_contact_pairs
         touch_left_gripper |= ("red_box", "left_arm_f1_1") in all_contact_pairs
         touch_left_gripper |= ("red_box", "left_arm_f2_0") in all_contact_pairs
         touch_left_gripper |= ("red_box", "left_arm_f2_1") in all_contact_pairs
         
-        touch_right_gripper = ("red_box", "right_arm_f1_0") in all_contact_pairs
+        touch_left_gripper =  ("left_arm_f1_0", "red_box") in all_contact_pairs
+        touch_left_gripper |= ("left_arm_f1_1", "red_box") in all_contact_pairs
+        touch_left_gripper |= ("left_arm_f2_0", "red_box") in all_contact_pairs
+        touch_left_gripper |= ("left_arm_f2_1", "red_box") in all_contact_pairs
+        
+        touch_right_gripper =  ("red_box", "right_arm_f1_0") in all_contact_pairs
         touch_right_gripper |= ("red_box", "right_arm_f1_1") in all_contact_pairs
         touch_right_gripper |= ("red_box", "right_arm_f2_0") in all_contact_pairs
         touch_right_gripper |= ("red_box", "right_arm_f2_1") in all_contact_pairs
-        touch_table = ("red_box", "table") in all_contact_pairs
+        
+        touch_right_gripper =  ("right_arm_f1_0", "red_box") in all_contact_pairs
+        touch_right_gripper |= ("right_arm_f1_1", "red_box") in all_contact_pairs
+        touch_right_gripper |= ("right_arm_f2_0", "red_box") in all_contact_pairs
+        touch_right_gripper |= ("right_arm_f2_1", "red_box") in all_contact_pairs
+        
+        touch_table = ("red_box", "table") in all_contact_pairs 
+        touch_table |= ("table", "red_box") in all_contact_pairs
 
         reward = 0
         if touch_right_gripper:
@@ -295,6 +307,7 @@ class RbyTransferCubeTask(RbyTask):
             reward = 3
         if touch_left_gripper and not touch_table: # successful transfer
             reward = 4
+        # print(f'reward: {reward}')
         return reward
 
 

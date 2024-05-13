@@ -144,8 +144,8 @@
                                     <geom mesh="left_arm_f1_1" material="75,75,75_1.003" class="visual"/>
                                     <geom mesh="left_arm_f1_0" class="collision" />
                                     <geom mesh="left_arm_f1_1" class="collision" />
-                                    <geom condim="4" name="left_arm_f1_0" solimp="2 1 0.01" solref="0.01 1" mesh="left_arm_f1_0" />
-                                    <geom condim="4" name="left_arm_f1_1" solimp="2 1 0.01" solref="0.01 1" mesh="left_arm_f1_1" />
+                                    <geom name="left_arm_f1_0" mesh="left_arm_f1_0" />
+                                    <geom name="left_arm_f1_1" mesh="left_arm_f1_1" />
 
                                     <inertial pos="0.16471 -0.5604 0.72393" mass="0.03"
                                         diaginertia="0.01 0.01 0.01" />
@@ -159,8 +159,8 @@
                                     <geom mesh="left_arm_f2_1" material="75,75,75_1.002" class="visual"/>
                                     <geom mesh="left_arm_f2_0" class="collision" />
                                     <geom mesh="left_arm_f2_1" class="collision" />
-                                    <geom condim="4" name="left_arm_f2_0" solimp="2 1 0.01" solref="0.01 1" mesh="left_arm_f2_0" class="collision" />
-                                    <geom condim="4" name="left_arm_f2_1" solimp="2 1 0.01" solref="0.01 1" mesh="left_arm_f2_1" class="collision" />
+                                    <geom name="left_arm_f2_0" mesh="left_arm_f2_0"/>
+                                    <geom name="left_arm_f2_1" mesh="left_arm_f2_1"/>
 
                                     <inertial pos="0.27529 -0.5604 0.72393" mass="0.03"
                                         diaginertia="0.01 0.01 0.01" />
