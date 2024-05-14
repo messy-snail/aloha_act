@@ -102,8 +102,7 @@ def main(args):
     }
 
     if is_eval:
-        # ckpt_names = [f'policy_best.ckpt']
-        ckpt_names = [f'policy_epoch_800_seed_0.ckpt']
+        ckpt_names = [f'policy_best.ckpt']
         results = []
         for ckpt_name in ckpt_names:
             success_rate, avg_return = eval_bc(config, ckpt_name, save_episode=True)
@@ -179,7 +178,8 @@ def eval_bc(config, ckpt_name, save_episode=True):
     # load policy and stats
     ckpt_path = os.path.join(ckpt_dir, ckpt_name)
     policy = make_policy(policy_class, policy_config)
-    loading_status = policy.load_state_dict(torch.load(ckpt_path))
+    loading_status = policy.load_state_dict(torch.load(ckpt_path, map_location=device))
+
     print(loading_status)
     policy.to(device)
     policy.eval()
@@ -298,7 +298,7 @@ def eval_bc(config, ckpt_name, save_episode=True):
                 target_qpos_list.append(target_qpos)
                 rewards.append(ts.reward)
 
-            plt.close()
+            # plt.close()
         if real_robot:
             move_grippers([env.puppet_bot_left, env.puppet_bot_right], [PUPPET_GRIPPER_JOINT_OPEN] * 2, move_time=0.5)  # open
             pass
