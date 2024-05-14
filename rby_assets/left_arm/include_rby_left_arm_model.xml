@@ -115,7 +115,8 @@
 
                             <inertial pos="0.2203 -0.45656 0.83282" mass="0.5"
                                 diaginertia="0.5 0.5 0.5" />
-                            <!-- <joint name="left_arm_6_joint" pos="0.254 -0.436 0.869" axis="1 0 0"
+                            <!-- <joint name="left_arm_6_joint" pos="0.254 -0.436 0.869" axis="1 0
+                            0"
                                 ref="1.206239456233958" /> -->
 
                             <joint name="left_arm_6_joint" pos="0.254 -0.436 0.869" axis="1 0 0"
@@ -129,44 +130,66 @@
                                 <geom mesh="left_arm_7_1" class="collision" />
                                 <geom mesh="left_arm_7_2" class="collision" />
 
+                                <!-- <body name="left_camera_frame" pos="0.33 -0.45 0.85" euler="0 -1.05 -1.5707"> -->
+                                <body name="left_camera_frame" pos="0.22 -0.53 0.95" euler="0 0 3.141592">
+                                    <camera name="left_wrist" pos="0 0 0" fovy="58" mode="targetbody"/>
+                                    <site pos="0.03 0 0" size="0.03 0.003 0.003" type="box" name="left_cam_x" rgba="0 1 1 0"/>
+                                    <site pos="0 0.03 0" size="0.003 0.03 0.003" type="box" name="left_cam_y" rgba="1 0 1 0"/>
+                                    <site pos="0 0 0.03" size="0.003 0.003 0.03" type="box" name="left_cam_z" rgba="1 1 0 0"/>
+                                    <site pos="0 0 -0.03" size="0.003 0.003 0.03" type="box" name="left_cam_z_negative" rgba="1 1 1 0"/>
+                                    <site name="left_cam_ps" type="box" pos="0 0 0" size="0.04 0.04 0.02" rgba="0.3 0.3 0.3 1" />
+                                </body>
+                                <!-- <site name="left_cam_ps" type="box" pos="0.33 -0.45 0.85"
+                                    euler="0 0 0 " size="0.04 0.04 0.02" rgba="0 1 1 1" />
+                                <camera name="left_wrist" pos="0.33 -0.45 0.85" fovy="20"
+                                    mode="fixed" euler="0 -1.05 -1.5707" />
+                                <site pos="0.03 0 0" size="0.03 0.003 0.003" type="box" name="test1" euler="0 -1.05 -1.5707" rgba="0 1 1 1"/>
+                                <site pos="0 0.03 0" size="0.003 0.03 0.003" type="box" name="test2" euler="0 -1.05 -1.5707" rgba="1 0 1 1"/>
+                                <site pos="0 0 0.03" size="0.003 0.003 0.03" type="box" name="test3" euler="0 -1.05 -1.5707" rgba="1 1 0 1"/> -->
+                                
                                 <inertial pos="0.22244 -0.51964 0.77099" mass="0.1"
                                     diaginertia="0.1 0.1 0.1" />
                                 <!-- <joint name="left_arm_7_joint" pos="0.22 -0.489265 0.807236"
                                     axis="0 0.648977564336161 0.760807545301901"4 ref="1.570796327" /> -->
                                 <joint name="left_arm_7_joint" pos="0.22 -0.489265 0.807236"
-                                    axis="0 0.648977564336161 0.760807545301901" ref="0" frictionloss="20" />
+                                    axis="0 0.648977564336161 0.760807545301901" ref="0"
+                                    frictionloss="20" />
 
-                                <site name="left_tcp" pos="0.22 -0.578 0.709"
-                                    euler="-0.706239456233958 0 -1.570796327" />
+                                <!-- <site name="left_tcp" pos="0.22 -0.578 0.709"
+                                    euler="-0.706239456233958 0 -1.570796327" /> -->
 
                                 <body name="left_arm_f1">
-                                    <geom mesh="left_arm_f1_0" material="70,70,70_1.003" class="visual"/>
-                                    <geom mesh="left_arm_f1_1" material="75,75,75_1.003" class="visual"/>
+                                    <geom mesh="left_arm_f1_0" material="70,70,70_1.003"
+                                        class="visual" />
+                                    <geom mesh="left_arm_f1_1" material="75,75,75_1.003"
+                                        class="visual" />
                                     <geom mesh="left_arm_f1_0" class="collision" />
                                     <geom mesh="left_arm_f1_1" class="collision" />
-                                    <geom name="left_arm_f1_0" mesh="left_arm_f1_0" />
-                                    <geom name="left_arm_f1_1" mesh="left_arm_f1_1" />
+                                    <geom group= "4" name="left_arm_f1_0" mesh="left_arm_f1_0" />
+                                    <geom group= "4" name="left_arm_f1_1" mesh="left_arm_f1_1" />
 
                                     <inertial pos="0.16471 -0.5604 0.72393" mass="0.03"
                                         diaginertia="0.01 0.01 0.01" />
                                     <joint name="left_arm_f1_joint" type="slide"
                                         pos="0.282 -0.572 0.704" axis="1 0 0"
-                                        range="-0.05 0" limited="true" frictionloss="10" ref="-0.05"/>
+                                        range="-0.05 0" limited="true" frictionloss="10" ref="-0.05" />
                                 </body>
 
                                 <body name="left_arm_f2">
-                                    <geom mesh="left_arm_f2_0" material="70,70,70_1.002" class="visual"/>
-                                    <geom mesh="left_arm_f2_1" material="75,75,75_1.002" class="visual"/>
+                                    <geom mesh="left_arm_f2_0" material="70,70,70_1.002"
+                                        class="visual" />
+                                    <geom mesh="left_arm_f2_1" material="75,75,75_1.002"
+                                        class="visual" />
                                     <geom mesh="left_arm_f2_0" class="collision" />
                                     <geom mesh="left_arm_f2_1" class="collision" />
-                                    <geom name="left_arm_f2_0" mesh="left_arm_f2_0"/>
-                                    <geom name="left_arm_f2_1" mesh="left_arm_f2_1"/>
+                                    <geom group= "4" name="left_arm_f2_0" mesh="left_arm_f2_0" />
+                                    <geom group= "4" name="left_arm_f2_1" mesh="left_arm_f2_1" />
 
                                     <inertial pos="0.27529 -0.5604 0.72393" mass="0.03"
                                         diaginertia="0.01 0.01 0.01" />
                                     <joint name="left_arm_f2_joint" type="slide"
                                         pos="0.282 -0.572 0.704" axis="1 0 0"
-                                        range="0 0.05" limited="true" frictionloss="10" ref="0.05"/>
+                                        range="0 0.05" limited="true" frictionloss="10" ref="0.05" />
                                 </body>
                             </body>
                         </body>

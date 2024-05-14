@@ -60,6 +60,19 @@ def make_ee_sim_env(task_name):
         task = RbyTransferCubeEETask(random=False)
         env = control.Environment(physics, task, time_limit=20, control_timestep=DT,
                                   n_sub_steps=None, flat_observation=False)
+    elif 'sim_rby_test_scripted' in task_name:
+        xml_path = os.path.join(XML_DIR2, f'rby_ee_transfer_cube.xml')
+        # m = mujoco.MjModel.from_xml_path(xml_path)
+        # d = mujoco.MjData(m)
+        # with mujoco.viewer.launch_passive(m, d) as viewer:
+        #     # while time.time() - start_time < 30:  # 30초 동안 유지
+        #     while True:  # 
+        #         mujoco.mj_step(m, d)  # 물리 시뮬레이션 스텝 진행
+        
+        physics = mujoco.Physics.from_xml_path(xml_path)
+        task = RbyTransferCubeEETask(random=False)
+        env = control.Environment(physics, task, time_limit=20, control_timestep=DT,
+                                  n_sub_steps=None, flat_observation=False)
     else:
         raise NotImplementedError
     return env
@@ -152,6 +165,9 @@ class BimanualViperXEETask(base.Task):
         obs['images']['angle'] = physics.render(height=480, width=640, camera_id='angle')
         obs['images']['vis'] = physics.render(height=480, width=640, camera_id='front_close')
         obs['images']['left_pillar'] = physics.render(height=480, width=640, camera_id='left_pillar')
+        
+        obs['images']['left_wrist'] = physics.render(height=480, width=640, camera_id='left_wrist')
+        obs['images']['right_wrist'] = physics.render(height=480, width=640, camera_id='right_wrist')
         # used in scripted policy to obtain starting pose
         obs['mocap_pose_left'] = np.concatenate([physics.data.mocap_pos[0], physics.data.mocap_quat[0]]).copy()
         obs['mocap_pose_right'] = np.concatenate([physics.data.mocap_pos[1], physics.data.mocap_quat[1]]).copy()
@@ -325,6 +341,9 @@ class RbyEETask(base.Task):
         obs['images']['angle'] = physics.render(height=480, width=640, camera_id='angle')
         # obs['images']['vis'] = physics.render(height=480, width=640, camera_id='front_close')
         obs['images']['left_pillar'] = physics.render(height=480, width=640, camera_id='left_pillar')
+        
+        obs['images']['left_wrist'] = physics.render(height=480, width=640, camera_id='left_wrist')
+        obs['images']['right_wrist'] = physics.render(height=480, width=640, camera_id='right_wrist')
 
         # used in scripted policy to obtain starting pose
         obs['mocap_pose_left'] = np.concatenate([physics.data.mocap_pos[0], physics.data.mocap_quat[0]]).copy()

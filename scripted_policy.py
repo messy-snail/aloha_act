@@ -123,6 +123,31 @@ class RbyPickAndTransferPolicy(BasePolicy):
             # {"t": 400, "xyz": meet_xyz + np.array([-0.2, 0, 0.02]), "quat": meet_right_quat.elements, "gripper": 1}, 
         ]
 
+class RbyTestMotionPolicy(BasePolicy):
+    
+    def generate_trajectory(self, ts_first):
+        init_mocap_pose_right = ts_first.observation['mocap_pose_right']
+        init_mocap_pose_left = ts_first.observation['mocap_pose_left']
+        
+        self.left_trajectory = [
+            {"t": 0, "xyz": init_mocap_pose_left[:3], "quat": init_mocap_pose_left[3:], "gripper": 0}, # sleep
+            {"t": 200000, "xyz": init_mocap_pose_left[:3], "quat": init_mocap_pose_left[3:], "gripper": 0}, # sleep
+        ]
+        
+        # Pick 
+        self.right_trajectory = [
+            {"t": 0, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0}, # sleep
+            {"t": 200, "xyz": init_mocap_pose_right[:3]+np.array([0.5, 0, 0]), "quat": init_mocap_pose_right[3:], "gripper": 0},
+            {"t": 400, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0},
+            {"t": 600, "xyz": init_mocap_pose_right[:3]+np.array([0, 0.5, 0]), "quat": init_mocap_pose_right[3:], "gripper": 0},
+            {"t": 800, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0},
+            {"t": 1000, "xyz": init_mocap_pose_right[:3]+np.array([0, 0, 0.5]), "quat": init_mocap_pose_right[3:], "gripper": 0},
+            {"t": 1200, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0},
+            {"t": 1400, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:] * Quaternion(axis=[1.0, 0.0, 0.0], degrees=90), "gripper": 0},
+            {"t": 1600, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0},
+            {"t": 200000, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0},
+        ]
+
 
 class PickAndTransferPolicy(BasePolicy):
 

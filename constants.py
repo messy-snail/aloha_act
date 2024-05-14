@@ -37,6 +37,13 @@ SIM_TASK_CONFIGS = {
         'episode_len': 600,
         'camera_names': ['top']
     },
+    
+    'sim_rby_test_scripted':{
+        'dataset_dir': DATA_DIR + '/sim_rby_test_scripted',
+        'num_episodes': 50,
+        'episode_len': 200000,
+        'camera_names': ['top']
+    },
 }
 
 ### Simulation envs fixed constants

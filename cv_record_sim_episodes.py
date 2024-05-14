@@ -10,7 +10,7 @@ import h5py
 from constants import PUPPET_GRIPPER_POSITION_NORMALIZE_FN, RBY_PUPPET_GRIPPER_POSITION_NORMALIZE_FN, SIM_TASK_CONFIGS
 from ee_sim_env import make_ee_sim_env
 from sim_env import make_sim_env, BOX_POSE
-from scripted_policy import PickAndTransferPolicy, InsertionPolicy, RbyPickAndTransferPolicy
+from scripted_policy import PickAndTransferPolicy, InsertionPolicy, RbyPickAndTransferPolicy, RbyTestMotionPolicy
 
 from utils import view_image
 
@@ -38,8 +38,8 @@ def main(args):
     render_angle_cam = 'angle'
     render_top_cam = 'top'
     render_left_pillar_cam = 'left_pillar'
-    # render_left_wrist_cam = 'left_wrist'
-    # render_right_wrist_cam = 'right_wrist'
+    render_left_wrist_cam = 'left_wrist'
+    render_right_wrist_cam = 'right_wrist'
 
     if not os.path.isdir(dataset_dir):
         os.makedirs(dataset_dir, exist_ok=True)
@@ -52,6 +52,8 @@ def main(args):
         policy_cls = InsertionPolicy
     elif task_name == 'sim_rby_task1_scripted':
         policy_cls = RbyPickAndTransferPolicy
+    elif task_name=='sim_rby_test_scripted':
+        policy_cls= RbyTestMotionPolicy
     else:
         raise NotImplementedError
 
@@ -75,11 +77,11 @@ def main(args):
             img_left_pillar = ts.observation['images'][render_left_pillar_cam]
             view_image(img_left_pillar, render_left_pillar_cam, script_txt)
             
-            # img_left = ts.observation['images'][render_left_wrist_cam]
-            # view_image(img_left, render_left_wrist_cam, script_txt)
+            img_left = ts.observation['images'][render_left_wrist_cam]
+            view_image(img_left, render_left_wrist_cam, script_txt)
             
-            # img_right = ts.observation['images'][render_right_wrist_cam]
-            # view_image(img_right, render_right_wrist_cam, script_txt)
+            img_right = ts.observation['images'][render_right_wrist_cam]
+            view_image(img_right, render_right_wrist_cam, script_txt)
 
         for step in range(episode_len):
             action = policy(ts)
@@ -95,11 +97,11 @@ def main(args):
                 img_left_pillar = ts.observation['images'][render_left_pillar_cam]
                 view_image(img_left_pillar, render_left_pillar_cam, script_txt + f' step: {step}')
                 
-                # img_left = ts.observation['images'][render_left_wrist_cam]
-                # view_image(img_left, render_left_wrist_cam, script_txt)
+                img_left = ts.observation['images'][render_left_wrist_cam]
+                view_image(img_left, render_left_wrist_cam, script_txt)
                 
-                # img_right = ts.observation['images'][render_right_wrist_cam]
-                # view_image(img_right, render_right_wrist_cam, script_txt)
+                img_right = ts.observation['images'][render_right_wrist_cam]
+                view_image(img_right, render_right_wrist_cam, script_txt)
                 # cv2.waitKey(1)
 
         episode_return = np.sum([ts.reward for ts in episode[1:]])
