@@ -2,7 +2,14 @@ import numpy as np
 import os
 import collections
 import matplotlib.pyplot as plt
+import threading
+# import ctypes
+# ctypes.CDLL('/System/Library/Frameworks/OpenGL.framework/OpenGL')
+# os.environ['MUJOCO_GL'] = 'osmesa'
+# os.environ['MUJOCO_GL'] = 'glfw'
+
 from dm_control import mujoco
+from dm_control import viewer
 from dm_control.rl import control
 from dm_control.suite import base
 
@@ -55,6 +62,18 @@ def make_sim_env(task_name):
                                   n_sub_steps=None, flat_observation=False)
     else:
         raise NotImplementedError
+    return env
+
+def run_viewer(env):
+    viewer.launch(env)
+    
+def make_sim_env_with_viewer(task_name):
+    # env = make_sim_env(task_name)  # Your existing function to create the environment
+    # viewer.launch(env)
+    # return env 
+    env = make_sim_env(task_name)  # 기존 환경 생성 함수를 사용
+    viewer_thread = threading.Thread(target=run_viewer, args=(env,))
+    viewer_thread.start()
     return env
 
 class BimanualViperXTask(base.Task):

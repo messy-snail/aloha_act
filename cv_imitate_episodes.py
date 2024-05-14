@@ -18,6 +18,8 @@ from visualize_episodes import save_videos
 
 from sim_env import BOX_POSE
 
+from utils import view_image
+
 import IPython
 e = IPython.embed
 
@@ -196,6 +198,9 @@ def eval_bc(config, ckpt_name, save_episode=True):
         env = make_real_env(init_node=True)
         env_max_reward = 0
     else:
+        # from sim_env import make_sim_env_with_viewer
+        # env = make_sim_env_with_viewer(task_name)
+        # env_max_reward = env.task.max_reward
         from sim_env import make_sim_env
         env = make_sim_env(task_name)
         env_max_reward = env.task.max_reward
@@ -223,9 +228,10 @@ def eval_bc(config, ckpt_name, save_episode=True):
 
         ### onscreen render
         if onscreen_render:
-            ax = plt.subplot()
-            plt_img = ax.imshow(env._physics.render(height=480, width=640, camera_id=onscreen_cam))
-            plt.ion()
+            view_image(env._physics.render(height=480, width=640, camera_id=onscreen_cam), 'Result')
+            # ax = plt.subplot()
+            # plt_img = ax.imshow(env._physics.render(height=480, width=640, camera_id=onscreen_cam))
+            # plt.ion()
 
         ### evaluation loop
         if temporal_agg:
@@ -240,9 +246,11 @@ def eval_bc(config, ckpt_name, save_episode=True):
             for t in range(max_timesteps):
                 ### update onscreen render and wait for DT
                 if onscreen_render:
-                    image = env._physics.render(height=480, width=640, camera_id=onscreen_cam)
-                    plt_img.set_data(image)
-                    plt.pause(DT)
+                    view_image(env._physics.render(height=480, width=640, camera_id=onscreen_cam), 'Result')
+                    
+                    # image = env._physics.render(height=480, width=640, camera_id=onscreen_cam)
+                    # plt_img.set_data(image)
+                    # plt.pause(DT)
 
                 ### process previous timestep to get qpos and image_list
                 obs = ts.observation

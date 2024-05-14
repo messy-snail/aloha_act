@@ -17,7 +17,7 @@ elif torch.backends.mps.is_available():
 else:
     device = torch.device("cpu")
 
-print("Using device:", device)
+# print("Using device:", device)
 
 
 def get_args_parser():

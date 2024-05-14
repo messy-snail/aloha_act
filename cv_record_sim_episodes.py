@@ -12,27 +12,13 @@ from ee_sim_env import make_ee_sim_env
 from sim_env import make_sim_env, BOX_POSE
 from scripted_policy import PickAndTransferPolicy, InsertionPolicy, RbyPickAndTransferPolicy
 
-import cv2
+from utils import view_image
 
 import IPython
 e = IPython.embed
 
 script_txt = 'Rollout out EE space scripted policy'
 replaying_txt = 'Replaying joint commands'
-txt_org = (10,15)
-font_style = cv2.FONT_HERSHEY_SIMPLEX
-font_scale = 0.5
-font_color = (255,255,255)
-font_thickness = 1
-font_line_type = cv2.LINE_AA
-
-def view_image(img, win_name, txt):
-    result = img.copy()
-    result = cv2.cvtColor(result, cv2.COLOR_RGB2BGR)
-    result = cv2.putText(result, txt, 
-                        txt_org, font_style, font_scale, 
-                        font_color, font_thickness, font_line_type)
-    cv2.imshow(win_name, result)
 
 def main(args):
     """
@@ -114,7 +100,7 @@ def main(args):
                 
                 # img_right = ts.observation['images'][render_right_wrist_cam]
                 # view_image(img_right, render_right_wrist_cam, script_txt)
-                cv2.waitKey(1)
+                # cv2.waitKey(1)
 
         episode_return = np.sum([ts.reward for ts in episode[1:]])
         episode_max_reward = np.max([ts.reward for ts in episode[1:]])
@@ -189,7 +175,7 @@ def main(args):
                 # img_right = ts.observation['images'][render_right_wrist_cam]
                 # view_image(img_right, render_right_wrist_cam, replaying_txt)
 
-                cv2.waitKey(1)
+                # cv2.waitKey(1)
                 
         episode_return = np.sum([ts.reward for ts in episode_replay[1:]])
         episode_max_reward = np.max([ts.reward for ts in episode_replay[1:]])

@@ -3,9 +3,27 @@ import torch
 import os
 import h5py
 from torch.utils.data import TensorDataset, DataLoader
+import cv2
 
 import IPython
 e = IPython.embed
+
+txt_org = (10,15)
+font_style = cv2.FONT_HERSHEY_SIMPLEX
+font_scale = 0.5
+font_color = (255,255,255)
+font_thickness = 1
+font_line_type = cv2.LINE_AA
+
+
+def view_image(img, win_name, txt = ''):
+    result = img.copy()
+    result = cv2.cvtColor(result, cv2.COLOR_RGB2BGR)
+    result = cv2.putText(result, txt, 
+                        txt_org, font_style, font_scale, 
+                        font_color, font_thickness, font_line_type)
+    cv2.imshow(win_name, result)
+    cv2.waitKey(1)
 
 class EpisodicDataset(torch.utils.data.Dataset):
     def __init__(self, episode_ids, dataset_dir, camera_names, norm_stats):
