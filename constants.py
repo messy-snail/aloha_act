@@ -32,10 +32,11 @@ SIM_TASK_CONFIGS = {
     },
     
     'sim_rby_task1_scripted':{
-        'dataset_dir': DATA_DIR + '/sim_rby_task1_scripted',
+        'dataset_dir': DATA_DIR + '/sim_rby_task1_scripted_3cams_new',
         'num_episodes': 50,
         'episode_len': 600,
-        'camera_names': ['top']
+        'camera_names': ['top', 'left_wrist', 'right_wrist'],
+        # 'camera_names': ['top']
     },
     
     'sim_rby_test_scripted':{
@@ -47,6 +48,7 @@ SIM_TASK_CONFIGS = {
 }
 
 ### Simulation envs fixed constants
+# DT = 0.02
 DT = 0.02
 JOINT_NAMES = ["waist", "shoulder", "elbow", "forearm_roll", "wrist_angle", "wrist_rotate"]
 START_ARM_POSE = [0, -0.96, 1.16, 0, -0.3, 0, 0.02239, -0.02239, 

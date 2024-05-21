@@ -251,9 +251,8 @@ class RbyTask(base.Task):
         obs['env_state'] = self.get_env_state(physics)
         obs['images'] = dict()
         obs['images']['top'] = physics.render(height=480, width=640, camera_id='top')
-        obs['images']['angle'] = physics.render(height=480, width=640, camera_id='angle')
-        obs['images']['left_pillar'] = physics.render(height=480, width=640, camera_id='left_pillar')
-        # obs['images']['vis'] = physics.render(height=480, width=640, camera_id='front_close')
+        obs['images']['left_wrist'] = physics.render(height=480, width=640, camera_id='left_wrist')
+        obs['images']['right_wrist'] = physics.render(height=480, width=640, camera_id='right_wrist')
 
         return obs
 

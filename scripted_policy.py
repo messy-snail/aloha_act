@@ -4,9 +4,19 @@ from pyquaternion import Quaternion
 
 from constants import SIM_TASK_CONFIGS
 from ee_sim_env import make_ee_sim_env
-
+import pyquaternion as pyq
 import IPython
 e = IPython.embed
+
+def rotate_quaternion(quat, axis, angle):
+    """
+    Rotate a quaternion by an angle around an axis
+    """
+    angle_rad = np.deg2rad(angle)
+    axis = axis / np.linalg.norm(axis)
+    q = pyq.Quaternion(quat)
+    q = q * pyq.Quaternion(axis=axis, angle=angle_rad)
+    return q.elements
 
 
 class BasePolicy:
@@ -65,6 +75,63 @@ class BasePolicy:
 
 class RbyPickAndTransferPolicy(BasePolicy):
     
+    # def generate_trajectory(self, ts_first):
+    #     init_mocap_pose_right = ts_first.observation['mocap_pose_right']
+    #     init_mocap_pose_left = ts_first.observation['mocap_pose_left']
+
+    #     box_info = np.array(ts_first.observation['env_state'])
+    #     box_xyz = box_info[:3]
+    #     box_quat = box_info[3:]
+    #     # print(f"Generate trajectory for {box_xyz=}")
+
+    #     # gripper_pick_quat = Quaternion(init_mocap_pose_right[3:])
+        
+    #     # Pitch -60 deg 회전
+    #     # gripper_pick_quat = gripper_pick_quat * Quaternion(axis=[0.0, 1.0, 0.0], degrees=-30)
+    #     # gripper_pick_quat = gripper_pick_quat * Quaternion(axis=[1.0, 0.0, 0.0], degrees=-30)
+    #     gripper_pick_quat = Quaternion(axis=[1.0, 0.0, 0.0], degrees=-30)
+        
+    #     # Roll 90 deg 회전
+    #     # meet_left_quat = Quaternion(axis=[1.0, 0.0, 0.0], degrees=90)
+    #     meet_left_quat = Quaternion(axis=[1.0, 0.0, 0.0], degrees=0) * Quaternion(axis=[0.0, 1.0, 0.0], degrees=60) * Quaternion(axis=[0.0, 0.0, 1.0], degrees=0)
+    #     meet_left_quat2 = Quaternion(axis=[1.0, 0.0, 0.0], degrees=0) * Quaternion(axis=[0.0, 1.0, 0.0], degrees=60) * Quaternion(axis=[0.0, 0.0, 1.0], degrees=-90)
+    #     meet_right_quat = Quaternion(axis=[1.0, 0.0, 0.0], degrees=-90) * Quaternion(axis=[0.0, 1.0, 0.0], degrees=-90) * Quaternion(axis=[0.0, 0.0, 1.0], degrees=-90)
+    #     meet_right_quat2 = Quaternion(axis=[1.0, 0.0, 0.0], degrees=-90) * Quaternion(axis=[0.0, 1.0, 0.0], degrees=-90) * Quaternion(axis=[0.0, 0.0, 1.0], degrees=-90)
+    #     # meet_right_quat3 = Quaternion(axis=[1.0, 0.0, 0.0], degrees=-30) * Quaternion(axis=[0.0, 1.0, 0.0], degrees=-90) * Quaternion(axis=[0.0, 0.0, 1.0], degrees=5)
+    #     # meat_right_quat2 = Quaternion(axis=[0.0, 1.0, 0.0], degrees=-30) # * Quaternion(axis=[1.0, 0.0, 0.0], degrees=-30)
+
+    #     # meet_xyz = box_xyz + np.array([0.1, 0.1, 0.1])
+    #     meet_xyz = np.array([0, -0.5, 0.70])
+        
+    #     self.left_trajectory = [
+    #         {"t": 0, "xyz": init_mocap_pose_left[:3], "quat": init_mocap_pose_left[3:], "gripper": 0}, # sleep
+    #         {"t": 150, "xyz": meet_xyz + np.array([0.2, 0, -0.02]), "quat": meet_left_quat.elements, "gripper": 0}, # approach meet position
+    #         {"t": 350, "xyz": meet_xyz + np.array([0, 0, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
+    #         {"t": 400, "xyz": meet_xyz + np.array([0, -0.035, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
+    #         {"t": 460, "xyz": meet_xyz + np.array([-0.00, -0.045, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
+    #         {"t": 500, "xyz": meet_xyz + np.array([-0.00, -0.045, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
+    #         {"t": 550, "xyz": meet_xyz + np.array([-0.00, -0.045, 0]), "quat": meet_left_quat2.elements, "gripper": 0}, #Close
+    #         {"t": 600, "xyz": meet_xyz + np.array([0.04, -0.03, 0]), "quat": meet_left_quat2.elements, "gripper": 0}, # approach meet position
+   
+    #     ]
+        
+    #     # Pick 
+    #     self.right_trajectory = [
+    #         {"t": 0, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0}, # sleep
+    #         {"t": 150, "xyz": box_xyz + np.array([-0.065, -0.03, 0.08]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach box #1
+    #         {"t": 200, "xyz": box_xyz + np.array([-0.065, -0.03, -0.035]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach box #2
+    #         {"t": 250, "xyz": box_xyz + np.array([-0.065, -0.03, -0.035]), "quat": gripper_pick_quat.elements, "gripper": 0}, # Grip
+    #         {"t": 270, "xyz": box_xyz + np.array([-0.065, -0.03, -0.035]), "quat": gripper_pick_quat.elements, "gripper": 0}, # Grip
+    #         {"t": 320, "xyz": box_xyz + np.array([-0.065, -0.03, 0.08]), "quat": gripper_pick_quat.elements, "gripper": 0}, # Lift Up
+    #         # {"t": 220, "xyz": meet_xyz + np.array([-0.04, 0, -0.0]), "quat": meet_right_quat.elements, "gripper": 0}, # meet #1
+    #         {"t": 440, "xyz": meet_xyz + np.array([-0.035, 0.02, -0.05]), "quat": meet_right_quat2.elements, "gripper": 0},
+    #         {"t": 460, "xyz": meet_xyz + np.array([-0.00, 0.02, -0.05]), "quat": meet_right_quat2.elements, "gripper": 0}, # approach hand
+    #         {"t": 550, "xyz": meet_xyz + np.array([-0.00, 0.02, -0.05]), "quat": meet_right_quat2.elements, "gripper": 1}, # Open
+    #         {"t": 600, "xyz": meet_xyz + np.array([-0.08, 0.0, -0.05]), "quat": meet_right_quat2.elements, "gripper": 1}, # Finish 
+    #         # {"t": 400, "xyz": meet_xyz + np.array([-0.2, 0, 0.02]), "quat": gripper_pick_quat.elements, "gripper": 0}, 
+    #         # {"t": 260, "xyz": meet_xyz + np.array([-0.2, 0, 0.02]), "quat": meet_right_quat.elements, "gripper": 1}, 
+    #         # {"t": 400, "xyz": meet_xyz + np.array([-0.2, 0, 0.02]), "quat": meet_right_quat.elements, "gripper": 1}, 
+    #     ]
     def generate_trajectory(self, ts_first):
         init_mocap_pose_right = ts_first.observation['mocap_pose_right']
         init_mocap_pose_left = ts_first.observation['mocap_pose_left']
@@ -74,12 +141,7 @@ class RbyPickAndTransferPolicy(BasePolicy):
         box_quat = box_info[3:]
         # print(f"Generate trajectory for {box_xyz=}")
 
-        # gripper_pick_quat = Quaternion(init_mocap_pose_right[3:])
-        
-        # Pitch -60 deg 회전
-        # gripper_pick_quat = gripper_pick_quat * Quaternion(axis=[0.0, 1.0, 0.0], degrees=-30)
-        # gripper_pick_quat = gripper_pick_quat * Quaternion(axis=[1.0, 0.0, 0.0], degrees=-30)
-        gripper_pick_quat = Quaternion(axis=[1.0, 0.0, 0.0], degrees=-30)
+        gripper_pick_quat = Quaternion(init_mocap_pose_right[3:])
         
         # Roll 90 deg 회전
         # meet_left_quat = Quaternion(axis=[1.0, 0.0, 0.0], degrees=90)
@@ -96,11 +158,11 @@ class RbyPickAndTransferPolicy(BasePolicy):
         self.left_trajectory = [
             {"t": 0, "xyz": init_mocap_pose_left[:3], "quat": init_mocap_pose_left[3:], "gripper": 0}, # sleep
             {"t": 150, "xyz": meet_xyz + np.array([0.2, 0, -0.02]), "quat": meet_left_quat.elements, "gripper": 0}, # approach meet position
-            {"t": 350, "xyz": meet_xyz + np.array([0, 0, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
-            {"t": 400, "xyz": meet_xyz + np.array([0, -0.035, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
-            {"t": 460, "xyz": meet_xyz + np.array([-0.065, -0.045, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
-            {"t": 500, "xyz": meet_xyz + np.array([-0.065, -0.045, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
-            {"t": 550, "xyz": meet_xyz + np.array([-0.065, -0.045, 0]), "quat": meet_left_quat2.elements, "gripper": 0}, #Close
+            {"t": 350, "xyz": meet_xyz + np.array([0.05, 0, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
+            {"t": 400, "xyz": meet_xyz + np.array([0.05, -0.035, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
+            {"t": 460, "xyz": meet_xyz + np.array([-0.01, -0.045, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
+            {"t": 500, "xyz": meet_xyz + np.array([-0.01, -0.045, 0]), "quat": meet_left_quat2.elements, "gripper": 1}, 
+            {"t": 550, "xyz": meet_xyz + np.array([-0.01, -0.045, 0]), "quat": meet_left_quat2.elements, "gripper": 0}, #Close
             {"t": 600, "xyz": meet_xyz + np.array([0.04, -0.03, 0]), "quat": meet_left_quat2.elements, "gripper": 0}, # approach meet position
    
         ]
@@ -108,15 +170,15 @@ class RbyPickAndTransferPolicy(BasePolicy):
         # Pick 
         self.right_trajectory = [
             {"t": 0, "xyz": init_mocap_pose_right[:3], "quat": init_mocap_pose_right[3:], "gripper": 0}, # sleep
-            {"t": 150, "xyz": box_xyz + np.array([-0.065, -0.025, 0.08]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach box #1
-            {"t": 200, "xyz": box_xyz + np.array([-0.065, -0.025, -0.035]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach box #2
-            {"t": 250, "xyz": box_xyz + np.array([-0.065, -0.025, -0.035]), "quat": gripper_pick_quat.elements, "gripper": 0}, # Grip
-            {"t": 270, "xyz": box_xyz + np.array([-0.065, -0.025, -0.035]), "quat": gripper_pick_quat.elements, "gripper": 0}, # Grip
-            {"t": 320, "xyz": box_xyz + np.array([-0.065, -0.025, 0.08]), "quat": gripper_pick_quat.elements, "gripper": 0}, # Lift Up
+            {"t": 150, "xyz": box_xyz + np.array([-0.065, -0.03, 0.08]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach box #1
+            {"t": 200, "xyz": box_xyz + np.array([-0.065, -0.03, -0.035]), "quat": gripper_pick_quat.elements, "gripper": 1}, # approach box #2
+            {"t": 250, "xyz": box_xyz + np.array([-0.065, -0.03, -0.035]), "quat": gripper_pick_quat.elements, "gripper": 0}, # Grip
+            {"t": 270, "xyz": box_xyz + np.array([-0.065, -0.03, -0.035]), "quat": gripper_pick_quat.elements, "gripper": 0}, # Grip
+            {"t": 320, "xyz": box_xyz + np.array([-0.065, -0.03, 0.08]), "quat": gripper_pick_quat.elements, "gripper": 0}, # Lift Up
             # {"t": 220, "xyz": meet_xyz + np.array([-0.04, 0, -0.0]), "quat": meet_right_quat.elements, "gripper": 0}, # meet #1
             {"t": 440, "xyz": meet_xyz + np.array([-0.035, 0.02, -0.05]), "quat": meet_right_quat2.elements, "gripper": 0},
-            {"t": 460, "xyz": meet_xyz + np.array([-0.03, 0.02, -0.05]), "quat": meet_right_quat2.elements, "gripper": 0}, # approach hand
-            {"t": 550, "xyz": meet_xyz + np.array([-0.03, 0.02, -0.05]), "quat": meet_right_quat2.elements, "gripper": 1}, # Open
+            {"t": 460, "xyz": meet_xyz + np.array([-0.00, 0.02, -0.05]), "quat": meet_right_quat2.elements, "gripper": 0}, # approach hand
+            {"t": 550, "xyz": meet_xyz + np.array([-0.00, 0.02, -0.05]), "quat": meet_right_quat2.elements, "gripper": 1}, # Open
             {"t": 600, "xyz": meet_xyz + np.array([-0.08, 0.0, -0.05]), "quat": meet_right_quat2.elements, "gripper": 1}, # Finish 
             # {"t": 400, "xyz": meet_xyz + np.array([-0.2, 0, 0.02]), "quat": gripper_pick_quat.elements, "gripper": 0}, 
             # {"t": 260, "xyz": meet_xyz + np.array([-0.2, 0, 0.02]), "quat": meet_right_quat.elements, "gripper": 1}, 

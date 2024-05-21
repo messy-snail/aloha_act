@@ -35,9 +35,9 @@ def main(args):
     onscreen_render = args['onscreen_render']
     inject_noise = False
     
-    render_angle_cam = 'angle'
     render_top_cam = 'top'
-    render_left_pillar_cam = 'left_pillar'
+    # render_angle_cam = 'angle'
+    # render_left_pillar_cam = 'left_pillar'
     render_left_wrist_cam = 'left_wrist'
     render_right_wrist_cam = 'right_wrist'
 
@@ -58,8 +58,10 @@ def main(args):
         raise NotImplementedError
 
     success = []
+    real_ep_idx = 0
     for episode_idx in range(num_episodes):
         print(f'{episode_idx=}')
+        print(f'{real_ep_idx=}')
         print('Rollout out EE space scripted policy')
         # setup the environment
         env = make_ee_sim_env(task_name)
@@ -68,14 +70,14 @@ def main(args):
         policy = policy_cls(inject_noise)
         # setup plotting
         if onscreen_render:           
-            img_angle = ts.observation['images'][render_angle_cam]
-            view_image(img_angle, render_angle_cam, script_txt)
+            # img_angle = ts.observation['images'][render_angle_cam]
+            # view_image(img_angle, render_angle_cam, script_txt)
             
             img_top = ts.observation['images'][render_top_cam]
             view_image(img_top, render_top_cam, script_txt)
             
-            img_left_pillar = ts.observation['images'][render_left_pillar_cam]
-            view_image(img_left_pillar, render_left_pillar_cam, script_txt)
+            # img_left_pillar = ts.observation['images'][render_left_pillar_cam]
+            # view_image(img_left_pillar, render_left_pillar_cam, script_txt)
             
             img_left = ts.observation['images'][render_left_wrist_cam]
             view_image(img_left, render_left_wrist_cam, script_txt)
@@ -88,14 +90,14 @@ def main(args):
             ts = env.step(action)
             episode.append(ts)
             if onscreen_render:
-                img_angle = ts.observation['images'][render_angle_cam]
-                view_image(img_angle, render_angle_cam, script_txt + f' step: {step}')
+                # img_angle = ts.observation['images'][render_angle_cam]
+                # view_image(img_angle, render_angle_cam, script_txt + f' step: {step}')
                 
                 img_top = ts.observation['images'][render_top_cam]
                 view_image(img_top, render_top_cam, script_txt + f' step: {step}')
                 
-                img_left_pillar = ts.observation['images'][render_left_pillar_cam]
-                view_image(img_left_pillar, render_left_pillar_cam, script_txt + f' step: {step}')
+                # img_left_pillar = ts.observation['images'][render_left_pillar_cam]
+                # view_image(img_left_pillar, render_left_pillar_cam, script_txt + f' step: {step}')
                 
                 img_left = ts.observation['images'][render_left_wrist_cam]
                 view_image(img_left, render_left_wrist_cam, script_txt)
@@ -142,8 +144,8 @@ def main(args):
         episode_replay = [ts]
         # setup plotting
         if onscreen_render:
-            img_angle = ts.observation['images'][render_angle_cam]
-            view_image(img_angle, render_angle_cam, replaying_txt)
+            # img_angle = ts.observation['images'][render_angle_cam]
+            # view_image(img_angle, render_angle_cam, replaying_txt)
             
             img_top = ts.observation['images'][render_top_cam]
             view_image(img_top, render_top_cam, replaying_txt)
@@ -151,19 +153,19 @@ def main(args):
             # img_left_pillar = ts.observation['images'][render_left_pillar_cam]
             # view_image(img_left_pillar, render_left_pillar_cam, replaying_txt)
             
-            # img_left = ts.observation['images'][render_left_wrist_cam]
-            # view_image(img_left, render_left_wrist_cam, replaying_txt)
+            img_left = ts.observation['images'][render_left_wrist_cam]
+            view_image(img_left, render_left_wrist_cam, replaying_txt)
             
-            # img_right = ts.observation['images'][render_right_wrist_cam]
-            # view_image(img_right, render_right_wrist_cam, replaying_txt)
+            img_right = ts.observation['images'][render_right_wrist_cam]
+            view_image(img_right, render_right_wrist_cam, replaying_txt)
             
         for t in range(len(joint_traj)): # note: this will increase episode length by 1
             action = joint_traj[t]
             ts = env.step(action)
             episode_replay.append(ts)
             if onscreen_render:
-                img_angle = ts.observation['images'][render_angle_cam]
-                view_image(img_angle, render_angle_cam, replaying_txt)
+                # img_angle = ts.observation['images'][render_angle_cam]
+                # view_image(img_angle, render_angle_cam, replaying_txt)
                 
                 img_top = ts.observation['images'][render_top_cam]
                 view_image(img_top, render_top_cam, replaying_txt)
@@ -171,11 +173,11 @@ def main(args):
                 # img_left_pillar = ts.observation['images'][render_left_pillar_cam]
                 # view_image(img_left_pillar, render_left_pillar_cam, replaying_txt)
                 
-                # img_left = ts.observation['images'][render_left_wrist_cam]
-                # view_image(img_left, render_left_wrist_cam, replaying_txt)
+                img_left = ts.observation['images'][render_left_wrist_cam]
+                view_image(img_left, render_left_wrist_cam, replaying_txt)
                 
-                # img_right = ts.observation['images'][render_right_wrist_cam]
-                # view_image(img_right, render_right_wrist_cam, replaying_txt)
+                img_right = ts.observation['images'][render_right_wrist_cam]
+                view_image(img_right, render_right_wrist_cam, replaying_txt)
 
                 # cv2.waitKey(1)
                 
@@ -185,6 +187,7 @@ def main(args):
             success.append(1)
             print(f"{episode_idx} Successful, {episode_return}")
         else:
+            continue
             success.append(0)
             print(f"{episode_idx} Failed")
 
@@ -228,7 +231,8 @@ def main(args):
 
         # HDF5
         t0 = time.time()
-        dataset_path = os.path.join(dataset_dir, f'episode_{episode_idx}')
+        # dataset_path = os.path.join(dataset_dir, f'episode_{episode_idx}')
+        dataset_path = os.path.join(dataset_dir, f'episode_{real_ep_idx}')
         with h5py.File(dataset_path + '.hdf5', 'w', rdcc_nbytes=1024 ** 2 * 2) as root:
             root.attrs['sim'] = True
             obs = root.create_group('observations')
@@ -250,6 +254,7 @@ def main(args):
             for name, array in data_dict.items():
                 root[name][...] = array
         print(f'Saving: {time.time() - t0:.1f} secs\n')
+        real_ep_idx+=1
 
     print(f'Saved to {dataset_dir}')
     print(f'Success: {np.sum(success)} / {len(success)}')

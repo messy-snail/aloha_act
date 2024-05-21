@@ -144,3 +144,4 @@ ckpt
 rby_assets_bk
 *.zip
 venv_aloha
+*venv*

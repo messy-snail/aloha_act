@@ -10,7 +10,9 @@ from constants import DT
 import IPython
 e = IPython.embed
 
-JOINT_NAMES = ["waist", "shoulder", "elbow", "forearm_roll", "wrist_angle", "wrist_rotate"]
+# RBY_LEFT_JOINT_NAMES = ["left_arm_1_joint", "left_arm_2_joint", "left_arm_3_joint", "left_arm_4_joint", "left_arm_5_joint", "left_arm_6_joint", "left_arm_7_joint"]
+# JOINT_NAMES = ["waist", "shoulder", "elbow", "forearm_roll", "wrist_angle", "wrist_rotate"]
+JOINT_NAMES = ["arm_1_joint", "arm_2_joint", "arm_3_joint", "arm_4_joint", "arm_5_joint", "arm_6_joint", "arm_7_joint"]
 STATE_NAMES = JOINT_NAMES + ["gripper"]
 
 def load_hdf5(dataset_dir, dataset_name):
