@@ -19,6 +19,7 @@ from visualize_episodes import save_videos
 from sim_env import BOX_POSE
 
 from utils import view_image
+# from task2 import RbyTask2
 
 import IPython
 e = IPython.embed
@@ -59,8 +60,8 @@ def main(args):
     camera_names = task_config['camera_names']
 
     # fixed parameters
-    # state_dim = 14
-    state_dim = 16
+    state_dim = 14
+    # state_dim = 16
     lr_backbone = 1e-5
     backbone = 'resnet18'
     if policy_class == 'ACT':
@@ -102,7 +103,8 @@ def main(args):
     }
 
     if is_eval:
-        ckpt_names = [f'policy_best.ckpt']
+        # ckpt_names = [f'policy_best.ckpt']
+        ckpt_names = [f'policy_epoch_900_seed_0.ckpt']
         results = []
         for ckpt_name in ckpt_names:
             success_rate, avg_return = eval_bc(config, ckpt_name, save_episode=True)
@@ -224,6 +226,8 @@ def eval_bc(config, ckpt_name, save_episode=True):
             BOX_POSE[0] = np.concatenate(sample_insertion_pose()) # used in sim reset
         elif 'sim_rby_task1_scripted' in task_name:
             BOX_POSE[0] = rby_sample_box_pose() # used in sim reset
+        # elif task_name =='task2':
+        #     policy_cls = RbyTask2
         ts = env.reset()
 
         ### onscreen render

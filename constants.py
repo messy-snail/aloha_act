@@ -1,13 +1,13 @@
 import pathlib
 
 ### Task parameters
-DATA_DIR = 'dataset'
+DATA_DIR = 'dataset2'
 SIM_TASK_CONFIGS = {
     'sim_transfer_cube_scripted':{
-        'dataset_dir': DATA_DIR + '/sim_transfer_cube_scripted',
+        'dataset_dir': DATA_DIR + '/',
         'num_episodes': 50,
         'episode_len': 400,
-        'camera_names': ['top']
+        'camera_names': ['top', 'left_wrist', 'right_wrist']
     },
 
     'sim_transfer_cube_human':{
@@ -45,6 +45,12 @@ SIM_TASK_CONFIGS = {
         'episode_len': 200000,
         'camera_names': ['top']
     },
+    'real_data':{
+        'dataset_dir': DATA_DIR + '/real_data',
+        'num_episodes': 50,
+        'episode_len': 200000,
+        'camera_names': ['top', 'left_wrist', 'right_wrist']
+    },
 }
 
 ### Simulation envs fixed constants
@@ -59,7 +65,7 @@ RBY_START_ARM_POSE = [0, 0, 0, 0, 0, 0, 0, 0, 0,
                       0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 XML_DIR = str(pathlib.Path(__file__).parent.resolve()) + '/assets/' # note: absolute path
-XML_DIR2 = str(pathlib.Path(__file__).parent.resolve()) + '/rby_assets/' # note: absolute path
+XML_DIR2 = str(pathlib.Path(__file__).parent.resolve()) + '/rby_mjcf_for_rl/' # note: absolute path
 
 # Left finger position limits (qpos[7]), right_finger = -1 * left_finger
 MASTER_GRIPPER_POSITION_OPEN = 0.02417

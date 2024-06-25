@@ -11,6 +11,7 @@ from constants import PUPPET_GRIPPER_POSITION_NORMALIZE_FN, RBY_PUPPET_GRIPPER_P
 from ee_sim_env import make_ee_sim_env
 from sim_env import make_sim_env, BOX_POSE
 from scripted_policy import PickAndTransferPolicy, InsertionPolicy, RbyPickAndTransferPolicy, RbyTestMotionPolicy
+# from task2 import RbyTask2
 
 from utils import view_image
 
@@ -54,6 +55,8 @@ def main(args):
         policy_cls = RbyPickAndTransferPolicy
     elif task_name=='sim_rby_test_scripted':
         policy_cls= RbyTestMotionPolicy
+    elif task_name =='task2':
+        policy_cls = RbyTask2
     else:
         raise NotImplementedError
 
@@ -123,6 +126,7 @@ def main(args):
                 joint[7] = left_ctrl
                 joint[7+8] = right_ctrl
             else:
+                print('other')
                 left_ctrl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[0])
                 right_ctrl = PUPPET_GRIPPER_POSITION_NORMALIZE_FN(ctrl[2])                
                 joint[6] = left_ctrl

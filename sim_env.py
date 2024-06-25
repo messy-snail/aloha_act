@@ -55,11 +55,14 @@ def make_sim_env(task_name):
         env = control.Environment(physics, task, time_limit=20, control_timestep=DT,
                                   n_sub_steps=None, flat_observation=False)
     elif 'sim_rby_task1_scripted' in task_name:
-        xml_path = os.path.join(XML_DIR2, f'rby_transfer_cube.xml')
+        # xml_path = os.path.join(XML_DIR2, f'rby_transfer_cube.xml')
+        xml_path = os.path.join(XML_DIR2, f'task1_joint.xml')
         physics = mujoco.Physics.from_xml_path(xml_path)
         task = RbyTransferCubeTask(random=False)
         env = control.Environment(physics, task, time_limit=20, control_timestep=DT,
                                   n_sub_steps=None, flat_observation=False)
+    elif 'task2' in task_name:
+        RbyTask2
     else:
         raise NotImplementedError
     return env
@@ -136,7 +139,7 @@ class BimanualViperXTask(base.Task):
         obs['images']['angle'] = physics.render(height=480, width=640, camera_id='angle')
         obs['images']['vis'] = physics.render(height=480, width=640, camera_id='front_close')
         obs['images']['left_wrist'] = physics.render(height=480, width=640, camera_id='left_wrist')
-        obs['images']['right_wrist'] = physics.render(height=480, width=640, camera_id='rightt_wrist')
+        obs['images']['right_wrist'] = physics.render(height=480, width=640, camera_id='right_wrist')
         
         return obs
 

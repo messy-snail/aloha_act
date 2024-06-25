@@ -48,7 +48,8 @@ def make_ee_sim_env(task_name):
         env = control.Environment(physics, task, time_limit=20, control_timestep=DT,
                                   n_sub_steps=None, flat_observation=False)
     elif 'sim_rby_task1_scripted' in task_name:
-        xml_path = os.path.join(XML_DIR2, f'rby_ee_transfer_cube.xml')
+        # xml_path = os.path.join(XML_DIR2, f'rby_ee_transfer_cube.xml')
+        xml_path = os.path.join(XML_DIR2, f'task1_mocap.xml')
         # m = mujoco.MjModel.from_xml_path(xml_path)
         # d = mujoco.MjData(m)
         # with mujoco.viewer.launch_passive(m, d) as viewer:
@@ -61,7 +62,8 @@ def make_ee_sim_env(task_name):
         env = control.Environment(physics, task, time_limit=20, control_timestep=DT,
                                   n_sub_steps=None, flat_observation=False)
     elif 'sim_rby_test_scripted' in task_name:
-        xml_path = os.path.join(XML_DIR2, f'rby_ee_transfer_cube.xml')
+        # xml_path = os.path.join(XML_DIR2, f'rby_ee_transfer_cube.xml')
+        xml_path = os.path.join(XML_DIR2, f'task1_mocap.xml')
         # m = mujoco.MjModel.from_xml_path(xml_path)
         # d = mujoco.MjData(m)
         # with mujoco.viewer.launch_passive(m, d) as viewer:
@@ -211,7 +213,7 @@ class TransferCubeEETask(BimanualViperXEETask):
             contact_pair = (name_geom_1, name_geom_2)
             all_contact_pairs.append(contact_pair)
 
-        print(f'all_contact_pairs: {all_contact_pairs}')
+        # print(f'all_contact_pairs: {all_contact_pairs}')
         touch_left_gripper = ("red_box", "vx300s_left/10_left_gripper_finger") in all_contact_pairs
         touch_right_gripper = ("red_box", "vx300s_right/10_right_gripper_finger") in all_contact_pairs
         touch_table = ("red_box", "table") in all_contact_pairs

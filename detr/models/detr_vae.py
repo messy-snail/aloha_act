@@ -10,11 +10,11 @@ from .transformer import build_transformer, TransformerEncoder, TransformerEncod
 
 import numpy as np
 
-is_rb = True
+is_rb = False
 num_actions = 16 if(is_rb) else 14
 import IPython
 e = IPython.embed
-
+# print(num_actions*50)
 
 def reparametrize(mu, logvar):
     std = logvar.div(2).exp()

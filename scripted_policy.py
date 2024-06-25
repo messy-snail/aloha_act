@@ -138,6 +138,7 @@ class RbyPickAndTransferPolicy(BasePolicy):
 
         box_info = np.array(ts_first.observation['env_state'])
         box_xyz = box_info[:3]
+        print(f'{box_xyz=}')
         box_quat = box_info[3:]
         # print(f"Generate trajectory for {box_xyz=}")
 
